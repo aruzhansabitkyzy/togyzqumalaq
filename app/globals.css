@@ -17,11 +17,19 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  
+}
+.container {
+  max-width:90%;
+  margin:0 auto;
+}
+.ornament {
+  height: 37px;
+  width: 37px;
+  border-radius:10px;
+  background-color:#ECB365;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin : 5px 0 0 10px;
 }

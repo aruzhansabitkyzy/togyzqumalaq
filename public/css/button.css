@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+.btn {
+    color: #ffffff;
+    border: 1px solid transparent;
+    font-family: 'Kanit';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-large {
+    border-radius: 5px;
+    font-size: 18px;
+    width: 100%;
+    padding: 25px 30px;
+}
+.btn-medium {
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 13px 30px;
+}
+.btn-small {
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px 24px;
+}
+.yellow {
+    background-color: #ECB365;
+}

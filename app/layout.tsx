@@ -1,8 +1,9 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Kanit } from 'next/font/google'
 import Header from '../components/Header/Header'
+import Popup from '@/components/ui/Popup/Popup'
 
-const inter = Inter({ subsets: ['latin'] })
+const kanit = Kanit({ subsets: ['latin'], weight:'400' })
 
 export const metadata = {
   title: 'Toqyzqumalaq',
@@ -15,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={kanit.className}>
         <Header />
         <main>
           {children}
