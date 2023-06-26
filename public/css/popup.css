@@ -22,21 +22,7 @@
     color: white;
     margin-bottom: 15px;
 }
-.popup__option {
-    display: flex;
-    margin-bottom: 15px;
-}
-.popup__option_circle {
-    width: 32px;
-    height: 32px;
-    background-color: white;
-    border-radius: 100%;
-    margin-right: 15px;
-}
-.popup__option_text {
-    font-size:20px;
-    color: white;
-}
+
 .popup__close {
     color: white;
     font-size:14px;

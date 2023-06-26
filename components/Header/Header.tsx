@@ -1,11 +1,10 @@
 'use client';
-import Link from 'next/link';
-import Ornament from '../ui/Ornament/Ornament'
 import './header.css';
 import {useState} from 'react';
 import React from 'react';
 import Popup from '../ui/Popup/Popup';
 import OrnamentSquare from '../ui/Ornament/OrnamentSquare';
+
 const Header = () => {
    const [show, setShow] = useState(false);
    const [action, setAction] = React.useState<string>("");
