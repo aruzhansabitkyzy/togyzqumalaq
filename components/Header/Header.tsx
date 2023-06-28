@@ -1,8 +1,9 @@
 'use client';
 import './header.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import '/public/css/global.css';
 import React from 'react';
-import Popup from '../ui/Popup/Popup';
+import Popup from '../Popup/Popup';
 import OrnamentSquare from '../ui/Ornament/OrnamentSquare';
 
 const Header = () => {
@@ -13,16 +14,16 @@ const Header = () => {
       setShow(true)
    }
     return (
-    <div className='header'>
+    <div className='header bg-light1  dark:bg-dark1'>
       <div className='container header__container'>
          <div className='header__left'>
-            <h3>Togyzqumalaq</h3>
+            <h3 className='header__title text-black dark:text-white'>Togyzqumalaq</h3>
             <OrnamentSquare />
          </div>
          <div className='header__right'>
-            <span onClick={() => {openPopup(); setAction("lang")}}>eng</span>
-            <span onClick={() => {openPopup(); setAction("theme")}}>theme</span>
-            <span onClick={() => {openPopup(); setAction("sound")}}>sound</span>
+            <span className='text-black dark:text-white' onClick={() => {openPopup(); setAction("lang")}}>eng</span>
+            <span className='text-black dark:text-white' onClick={() => {openPopup(); setAction("theme")}}>theme</span>
+            <span className='text-black dark:text-white' onClick={() => {openPopup(); setAction("sound")}}>sound</span>
          </div>
       </div>
       {show && <Popup action={action} setAction={setAction} show={show} setShow={setShow}/>}

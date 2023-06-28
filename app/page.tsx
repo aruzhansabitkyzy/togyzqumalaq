@@ -20,7 +20,7 @@ export default function Home() {
 
     }
   return (
-     <div className="home">
+     <div className="home bg-light3 dark:bg-dark3">
          <div className='container home__container'>
              <div className='home__left'>
                  <div className='home__desc'>
@@ -44,11 +44,11 @@ export default function Home() {
              </div>
              <div className='home__right'>
                  <div className='home__play'>
-                       <label className='label'>Name : </label>
+                       <label className='label text-black dark:text-white'>Name : </label>
                        <br />
                        <input className='home__input' type='text' onChange={(e) => setName(e.target.value)}></input>
                        <br />
-                       <label className='label'>Room number : </label>
+                       <label className='label text-black dark:text-white'>Room number : </label>
                        <br/>
                        <input className='home__input' type='text' onChange={(e) => setRoom(e.target.value) }></input>
                        <br />

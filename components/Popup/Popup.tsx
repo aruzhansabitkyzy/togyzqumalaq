@@ -7,7 +7,7 @@ const THEMES = ['dark' , 'light']
 
 type Props  = {
     action: string,
-    setAction: Function ,
+    setAction: Function,
     show: boolean, 
     setShow: Function
 }

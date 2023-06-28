@@ -1,7 +1,7 @@
 import './globals.css'
 import { Kanit } from 'next/font/google'
 import Header from '../components/Header/Header'
-import { ReduxProvider } from '@/store/provider'
+import { MyThemeContextProvider } from '@/context/ThemeContext'
 
 const kanit = Kanit({ subsets: ['latin'], weight:'400' })
 
@@ -17,13 +17,13 @@ export default function RootLayout({
   return (
         <html lang="en">
           <body className={kanit.className}>
-            <ReduxProvider>
-              <Header />
-              <main>
-                {children}
-              </main>
-            </ReduxProvider>
-           
+            <MyThemeContextProvider>
+                <Header />
+                <main>
+                      {children}
+                </main>
+            </MyThemeContextProvider>
+             
             </body>
         </html>
   )

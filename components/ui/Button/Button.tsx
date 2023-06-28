@@ -19,7 +19,7 @@ const Button = (props:ButtonProps) => {
     
    return(
       <div className='button'>
-           <button className={`btn ${buttonColor} ${buttonSize}`} onClick={() => onClick()}>
+           <button className={`btn ${buttonSize}  bg-light2 dark:bg-dark2`} onClick={() => onClick()}>
               {children}
            </button>
       </div>
