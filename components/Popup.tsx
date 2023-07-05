@@ -1,6 +1,6 @@
 'use client';
 import '/public/css/popup.css';
-import Selection from '@/components/Selection/Selection';
+import Selection from '@/components/Selection';
 
 const LANGUAGES = ['english', 'kazakh', 'russian']
 const THEMES = ['dark' , 'light']

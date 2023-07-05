@@ -1,10 +1,9 @@
 'use client';
-import './header.css';
+import '/public/css/header.css';
 import {useEffect, useState} from 'react';
-import '/public/css/global.css';
 import React from 'react';
-import Popup from '../Popup/Popup';
-import OrnamentSquare from '../ui/Ornament/OrnamentSquare';
+import Popup from './Popup';
+import OrnamentSquare from './ui/Ornament/OrnamentSquare';
 
 const Header = () => {
    const [show, setShow] = useState(false);

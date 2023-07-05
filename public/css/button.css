@@ -11,17 +11,17 @@
     border-radius: 5px;
     font-size: 18px;
     width: 100%;
-    padding: 25px 30px;
+    padding: 10px 30px;
 }
 .btn-medium {
     border-radius: 5px;
     font-size: 18px;
-    padding: 13px 30px;
+    padding: 10px 20px;
 }
 .btn-small {
     border-radius: 5px;
     font-size: 16px;
-    padding: 10px 24px;
+   
 }
 .yellow {
     background-color: #ECB365;

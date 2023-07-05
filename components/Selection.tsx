@@ -1,7 +1,7 @@
 'use client';
 import {useDispatch} from 'react-redux';
 import '/public/css/selection.css';
-import ThemeSwitcher from '@/app/ThemeSwitcher';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 //constant arrays
 const LANGUAGES = ['english', 'kazakh', 'russian']
@@ -15,10 +15,6 @@ type PropType = {
 
 const Selection = ({isTheme, isLanguage}: PropType) => {
     
-
-    function handleTheme(el:string) {
-        
-     }
   
      function handleLanguage(el:string) {
        

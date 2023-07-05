@@ -1,6 +1,6 @@
 import './globals.css'
 import { Kanit } from 'next/font/google'
-import Header from '../components/Header/Header'
+import Header from '../components/Header'
 import { MyThemeContextProvider } from '@/context/ThemeContext'
 
 const kanit = Kanit({ subsets: ['latin'], weight:'400' })

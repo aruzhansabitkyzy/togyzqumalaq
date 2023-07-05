@@ -3,18 +3,17 @@ import Head from 'next/head';
 import {useState, useEffect} from 'react';
 import Button from '@/components/ui/Button/Button'
 import '/public/css/home.css'
-import '/public/css/global.css'
 import Link from 'next/link';
+
 export default function Home() {
     const [name, setName] = useState("");
     const [room, setRoom] = useState("");
-
 
     useEffect(() => {
        console.log(name)
     }, [name])
     function createRoom() {
-  
+       
     }
     function joinRoom() {
 
@@ -29,12 +28,12 @@ export default function Home() {
                      <h4>Togyzqumalaq is a time-honored game played between two people on a unique board. Immerse yourself in the rich culture of Kazakhstan while challenging your strategic thinking and decision-making skills.</h4>
                  </div>
                  <div className='home__tutorial'>
-                    <Link href='/rules' className='home__bottom_btns home__game_rules'>
+                    <Link href='/rules' className='home__bottom_btns home__game_rules hover:bg-light2 dark:hover:bg-dark2'>
                     <div>
                          <span>Rules</span>
                     </div>
                     </Link>
-                    <Link href='/tutorial' className='home__bottom_btns home__game_tutorial'>
+                    <Link href='/tutorial' className='home__bottom_btns home__game_tutorial hover:bg-light2 dark:md:hover:bg-dark2'>
                     <div>
                          <span>Live tutorial</span>
                     </div>
@@ -53,8 +52,8 @@ export default function Home() {
                        <input className='home__input' type='text' onChange={(e) => setRoom(e.target.value) }></input>
                        <br />
                        <div className='home__buttons'>
-                        <Button children={'Create a room'} size={'btn-medium'} color={'yellow'} onClick={() => createRoom()} />
-                        <Button children={'Join a room'} size={'btn-medium'} color={'yellow'} onClick={() => joinRoom()} />
+                        <Button children={'Create a room'} size={'btn-medium'} onClick={() => createRoom()} />
+                        <Button children={'Join a room'} size={'btn-medium'}  onClick={() => joinRoom()} />
                        </div>
                  </div>
              </div>
