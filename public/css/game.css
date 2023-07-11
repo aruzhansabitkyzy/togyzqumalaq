@@ -42,11 +42,32 @@
     background-color: #F6EDDD;
 }
 .otau-in {
-    max-width: 80px;
+    width: 80px;
     max-height:162px;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    position: relative;
+}
+.upper_col1 {
+    position: absolute;
+    top: 1%;
+    left: 12%;
+}
+.upper_col2 {
+    position: absolute;
+    top: 1%;
+    left: 47%;
+}
+.cur__quantity {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 100%;
+    padding-left: 3px;
+    padding-bottom: 5px;
+    z-index: 10;
 }
 .otaular {
     display: flex;
@@ -57,19 +78,49 @@
 /*  qazandyq */
 .qazandyq {
     width: 100%;
-    height: 60px;
+    height: 70px;
     background-color: #F6EDDD;
     margin-bottom: 10px;
+    position: relative;
+}
+.row1 {
+    display: flex;
+    margin: 0;
+}
+.row2 {
+    display: flex;
+    margin: 0;
+}
+.upper_row1 {
+    position: absolute;
+    top: 15%;
+    display: flex;
+}
+.upper_row2 {
+    position: absolute;
+    top: 30%;
+    display: flex;
+}
+
+.counter {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 100%;
+    padding-left: 5px;
+    padding-bottom: 3px;
+    z-index: 10;
+    left: 97%
 }
 
 /* ball*/
 .ball {
     width: 28px;
     height: 28px;
-    
 }
 
-@media(max-width:951px) {
+@media(max-width:1052px) {
     .game {
         flex-direction: column;
         position: relative;
@@ -101,7 +152,7 @@
     }
 }
 
-@media(max-width: 736px) {
+@media(max-width: 854px) {
     body {
         display: none;
     }

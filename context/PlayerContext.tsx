@@ -27,8 +27,11 @@ export function PlayerProvider(props:PlayerPropsInterface) {
         setPlayer1(pl1);
         setPlayer2(pl2);
     }
-    function setTuzdyq(index: number) {
+    function setTuzdyq(otauId: number, playerId: number) {
         
+    }
+    function setScore(score: number, playerId: number) {
+        playerId==0 ? player1?.setScore(score) : player2?.setScore(score);
     }
 
     // function setTurn(playerIndex: number) {

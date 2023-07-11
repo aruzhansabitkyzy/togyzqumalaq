@@ -19,6 +19,7 @@ const Otau = (props:PropsType) => {
 
     return(
        <div className='otau-in'>
+            <div className='cur__quantity'>{quantity}</div>
             <div className='col1'>
                  {col1 && col1.map((el) => (
                     <Ball/>
