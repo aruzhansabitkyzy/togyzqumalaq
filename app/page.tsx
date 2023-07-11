@@ -1,22 +1,27 @@
 'use client';
 import Head from 'next/head';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import Button from '@/components/ui/Button/Button'
 import '/public/css/home.css'
+import {useRouter} from 'next/navigation'
 import Link from 'next/link';
+import { usePlayerContext } from '@/context/PlayerContext';
 
 export default function Home() {
-    const [name, setName] = useState("");
+    const player = usePlayerContext();
+    const [name1, setName1] = useState("");
+    const [name2, setName2] = useState("");
     const [room, setRoom] = useState("");
+    const router = useRouter();
+   
 
-    useEffect(() => {
-       console.log(name)
-    }, [name])
     function createRoom() {
-       
+        player.createPlayers(name1, name2);
+        router.push('/game');
     }
     function joinRoom() {
-
+        player.createPlayers(name1, name2);
+        router.push('/game');
     }
   return (
      <div className="home bg-light3 dark:bg-dark3">
@@ -43,14 +48,18 @@ export default function Home() {
              </div>
              <div className='home__right'>
                  <div className='home__play'>
-                       <label className='label text-black dark:text-white'>Name : </label>
+                       <label className='label text-black dark:text-white'>Player 1 : </label>
                        <br />
-                       <input className='home__input' type='text' onChange={(e) => setName(e.target.value)}></input>
+                       <input className='home__input' type='text' value={name1} onChange={(e) => setName1(e.target.value)}></input>
                        <br />
-                       <label className='label text-black dark:text-white'>Room number : </label>
+                       <label className='label text-black dark:text-white'>Player 2 : </label>
+                       <br />
+                       <input className='home__input' type='text' value={name2} onChange={(e) => setName2(e.target.value)}></input>
+                       <br />
+                       {/* <label className='label text-black dark:text-white'>Room number : </label>
                        <br/>
-                       <input className='home__input' type='text' onChange={(e) => setRoom(e.target.value) }></input>
-                       <br />
+                       <input className='home__input' type='text' value={room} onChange={(e) => setRoom(e.target.value) }></input> */}
+                       {/* <br /> */}
                        <div className='home__buttons'>
                         <Button children={'Create a room'} size={'btn-medium'} onClick={() => createRoom()} />
                         <Button children={'Join a room'} size={'btn-medium'}  onClick={() => joinRoom()} />

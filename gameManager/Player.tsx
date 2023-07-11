@@ -23,3 +23,4 @@ class Player {
          return index == this.tuzdyq   
     }
 }
+export default Player;
