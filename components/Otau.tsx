@@ -27,22 +27,22 @@ const Otau = (props:PropsType) => {
                 <div className='cur__quantity'>{quantity}</div>
                 <div className='col1'>
                     {col1 && col1.map((el) => (
-                        <Ball/>
+                        <Ball key={el}/>
                     ))}
                 </div>
                 <div className='col2'>
                     {col2 && col2.map((el) => (
-                        <Ball/>
+                        <Ball key={el}/>
                         ))}
                 </div>
                 <div className='upper_col1'>
                 {upper1 && upper1.map((el) => (
-                        <Ball/>
+                        <Ball key={el}/>
                         ))}
                 </div>
                 <div className='upper_col2'>
                 {upper2 && upper2.map((el) => (
-                            <Ball/>
+                            <Ball key={el}/>
                         ))}
                 </div>
             </div>

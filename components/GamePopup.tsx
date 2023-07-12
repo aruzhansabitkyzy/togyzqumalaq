@@ -37,8 +37,8 @@ const GamePopup = (props: PropsType) => {
              <div className='winnerPopup'>
                   <h1>{winner()} is a winner</h1>
                   <div className='winnerPopup__btns'>
-                  <Button children='Play again' size={'btn-medium'} onClick={() => {}}/>
-                  <Button children='Go to Home' size={'btn-medium'} onClick={() => {}}/>
+                  <Button text='Play again' size={'btn-medium'} onClick={() => {}}/>
+                  <Button text='Go to Home' size={'btn-medium'} onClick={() => {}}/>
                   </div>
                   
              </div>

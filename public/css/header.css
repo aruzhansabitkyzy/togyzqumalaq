@@ -25,6 +25,9 @@
     justify-content: space-between;
     align-items:center;
 }
+.header__left {
+    cursor: pointer;
+}
 .header__left, .header__right {
     display: flex;
 }

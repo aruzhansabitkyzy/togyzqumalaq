@@ -2,7 +2,6 @@ import './globals.css'
 import { Kanit } from 'next/font/google'
 import Header from '../components/Header'
 import { MyThemeContextProvider } from '@/context/ThemeContext'
-import { UserProvider } from '@/redux/provider'
 import { PlayerProvider } from '@/context/PlayerContext'
 
 const kanit = Kanit({ subsets: ['latin'], weight:'400' })

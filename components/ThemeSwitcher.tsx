@@ -28,15 +28,15 @@ const ThemeSwitcher =() => {
                        (<img src={'/images/tick.png'}/>)
                     : ('')}
                 </div>
-                <div className='popup__option_text'>dark</div>
+                <div className='popup__option_text text-black dark:text-white'>dark</div>
             </div> 
             <div className='popup__option' onClick={setLightTheme}>
-                <div className={`popup__option_circle ${isDark=='false' ? 'bg-dark2' : ''}`}>
+                <div className={`popup__option_circle ${isDark=='false' ? 'bg-light2' : ''}`}>
                 {isDark=='false'  ?
                        (<img src={'/images/tick.png'}/>)
                     : ('')}
                 </div>
-                <div className='popup__option_text'>light</div>
+                <div className='popup__option_text text-black dark:text-white'>light</div>
             </div> 
       
         </>

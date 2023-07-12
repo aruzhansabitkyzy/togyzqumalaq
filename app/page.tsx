@@ -61,8 +61,8 @@ export default function Home() {
                        <input className='home__input' type='text' value={room} onChange={(e) => setRoom(e.target.value) }></input> */}
                        {/* <br /> */}
                        <div className='home__buttons'>
-                        <Button children={'Create a room'} size={'btn-medium'} onClick={() => createRoom()} />
-                        <Button children={'Join a room'} size={'btn-medium'}  onClick={() => joinRoom()} />
+                        <Button text={'Create a room'} size={'btn-medium'} onClick={() => createRoom()} />
+                        <Button text={'Join a room'} size={'btn-medium'}  onClick={() => joinRoom()} />
                        </div>
                  </div>
              </div>

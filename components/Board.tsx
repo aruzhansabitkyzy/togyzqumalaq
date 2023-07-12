@@ -3,7 +3,6 @@ import Otau from "./Otau"
 import React, {Component, useState, useEffect} from 'react'
 import Qazandyq from "./Qazandyq";
 import '/public/css/game.css';
-import {PlayerContextProps} from "@/utils/PlayerInterface";
 import Popup from "./Popup";
 import { usePlayerContext } from "@/context/PlayerContext";
 type BoardCell = {
@@ -34,7 +33,7 @@ const initBoard: BoardCell[] = [
     { playerId: 0, id: 9, count: 9, hover: false, tuzdyq: false },
 ]
 
-const Board = (props: PlayerContextProps ) => {
+const Board = () => {
     const [board, setBoard] = useState(initBoard);
     const [currentPlayer, setCurrentPlayer] = useState(0);
     const [qazandyq1, setQazandyq1] = useState<number>(0);

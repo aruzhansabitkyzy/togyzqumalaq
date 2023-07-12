@@ -19,22 +19,22 @@ const Qazandyq = (props: PropsType) => {
              <div className='qumalaqs'>
                     <div className='row1'>
                         {row1 &&row1.map((row1) => (
-                            <Ball/>
+                            <Ball key={row1}/>
                         ))}
                     </div>
                     <div className='row2'>
                         {row2 && row2.map((row2) => (
-                            <Ball />
+                            <Ball key={row2}/>
                             ))}
                     </div>
                     <div className='upper_row1'>
                     {upperRow1 && upperRow1.map((upperRow1) => (
-                                <Ball />
+                                <Ball key={upperRow1} />
                             ))}
                     </div>
                     <div className='upper_row2'>
                     {upperRow2 && upperRow2.map((upperRow2) => (
-                                <Ball />
+                                <Ball key={upperRow2}/>
                             ))}
                     </div>
              </div>

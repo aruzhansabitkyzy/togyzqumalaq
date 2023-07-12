@@ -22,16 +22,6 @@ const Selection = ({isTheme, isLanguage}: PropType) => {
     return(
         <>
          {isTheme && <ThemeSwitcher />}
-            {/* {isLanguage && LANGUAGES.map((el) => (
-                <div key={el} className='popup__option' onClick={() => handleLanguage(el)}>
-                    <div className={`popup__option_circle ${language === el  ? 'yellow' : ''}`}>
-                       {language === el && (
-                            <img src={'/images/tick.png' }/>
-                        )}
-                    </div>
-                    <div className='popup__option_text'>{el}</div>
-                </div> 
-           ))} */}
         </>
           
                

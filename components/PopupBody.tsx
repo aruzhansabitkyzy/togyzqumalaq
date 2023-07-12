@@ -12,11 +12,11 @@ const PopupBody = (props: Props) =>
     const isLanguage = props.action=='lang'
     return(
         <>
-            <h2 className='popup__title'>{props.action}</h2>
+            <h2 className='popup__title text-black dark:text-white'>{props.action}</h2>
             <div className='popup__body'>
                <Selection isTheme={isTheme} isLanguage={isLanguage} />
             </div>
-            <div className='popup__close' onClick={() => props.setShow(false)}>
+            <div className='popup__close text-black dark:text-white' onClick={() => props.setShow(false)}>
                 close
             </div>
         </>
