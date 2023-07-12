@@ -5,6 +5,7 @@
     background-color: rgba(0,0,0,0.5);
     width: 100%;
     height: 100vh;
+    z-index: 100;
 }
 .popup__box {
     position: relative;
@@ -15,6 +16,7 @@
     left: 35%;
     border-radius: 10px;
     padding: 30px;
+    z-index: 100;
 }
 .popup__title {
     font-size:20px;
@@ -28,4 +30,21 @@
     font-size:14px;
     float: right;
     cursor: pointer;
+}
+.tuzdyqPopup h1 {
+    text-align: center;
+    color: white;
+    font-size: 25px;    
+    padding-top: 15%;
+}
+.winnerPopup h1 {
+    text-align: center;
+    color: white;
+    font-size: 25px;    
+    padding-top: 15%;
+}
+.winnerPopup__btns {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
 }

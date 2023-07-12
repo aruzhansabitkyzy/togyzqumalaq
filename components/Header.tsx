@@ -22,10 +22,10 @@ const Header = () => {
          <div className='header__right'>
             <span className='text-black dark:text-white' onClick={() => {openPopup(); setAction("lang")}}>eng</span>
             <span className='text-black dark:text-white' onClick={() => {openPopup(); setAction("theme")}}>theme</span>
-            <span className='text-black dark:text-white' onClick={() => {openPopup(); setAction("sound")}}>sound</span>
+            <span className='text-black dark:text-white' onClick={() => {}}>sound</span>
          </div>
       </div>
-      {show && <Popup action={action} setAction={setAction} show={show} setShow={setShow}/>}
+      {show && <Popup action={action} show={show} setShow={setShow}/>}
     </div>
     )
 }

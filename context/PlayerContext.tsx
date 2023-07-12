@@ -11,7 +11,10 @@ interface PlayerPropsInterface {
 const PlayerContext = createContext<PlayerContextType>({
     player1: null,
     player2:null, 
-    createPlayers : () =>{}
+    createPlayers : () =>{},
+    setContextScore : () => {},
+    setContextTuzdyq : () => {},
+    setContextWinner : () => {}
 })
 
 
@@ -27,30 +30,20 @@ export function PlayerProvider(props:PlayerPropsInterface) {
         setPlayer1(pl1);
         setPlayer2(pl2);
     }
-    function setTuzdyq(otauId: number, playerId: number) {
-        
+
+    function setContextTuzdyq(otauId: number, playerId: number) {
+        playerId == 0 ?  player1?.setTuzdyq(otauId) : player2?.setTuzdyq(otauId)
     }
-    // function setScore(score: number) {
-    //     setPlayer1(score)
-    // }
 
-    // function setTurn(playerIndex: number) {
-    //     if(playerIndex == 0 && player1 && player2) {
-    //         player1.isGoing = true;
-    //         player2.isGoing = false;
-    //         setPlayer1(player1);
-    //         setPlayer2(player2);
-    //     }
-    //     else if(playerIndex == 1 && player1 && player2){
-    //         player1.isGoing = false;
-    //         player2.isGoing = true;
-    //         setPlayer1(player1);
-    //         setPlayer2(player2);
-    //     }
-    // }
+    function setContextScore(score: number, playerId: number) {
+        playerId == 0 ? player1?.setScore(score) : player2?.setScore(score);
+    }
 
+    function setContextWinner(playerId: number) {
+        playerId == 0 ? player1?.setWinner(true) : player2?.setWinner(true);
+    }
     return (
-        <PlayerContext.Provider value={{player1, player2, createPlayers}}>
+        <PlayerContext.Provider value={{player1, player2, createPlayers, setContextScore, setContextTuzdyq, setContextWinner}}>
             {props.children}
         </PlayerContext.Provider>
     )

@@ -2,6 +2,7 @@ class Player {
     username:string
     tuzdyq:number
     isGoing:boolean 
+    isWinner: boolean
     score: number
     constructor(username:string) {
         this.username = username;
@@ -9,18 +10,27 @@ class Player {
         this.isGoing = false;
         this.setScore = this.setScore.bind(this);
         this.tuzdyq = -1;
+        this.isWinner = false;
     }
 
     setScore(score:number) {
          if(typeof score === 'number')
             this.score+= score
     }
-
+    setWinner(flag: boolean) {
+       this.isWinner =flag;
+    }
     getScore() {
         return this.score
     }
-    isTuzdyq(index:number) {
-         return index == this.tuzdyq   
+    setTuzdyq(number: number) {
+        this.tuzdyq = number;
+    }
+    getTuzdyq() {
+        return this.tuzdyq
+    }
+    isTuzdyq() {
+         return this.getTuzdyq() != -1 
     }
 }
 export default Player;

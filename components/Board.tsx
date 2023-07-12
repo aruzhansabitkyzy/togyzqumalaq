@@ -4,7 +4,8 @@ import React, {Component, useState, useEffect} from 'react'
 import Qazandyq from "./Qazandyq";
 import '/public/css/game.css';
 import {PlayerContextProps} from "@/utils/PlayerInterface";
-import { current } from "@reduxjs/toolkit";
+import Popup from "./Popup";
+import { usePlayerContext } from "@/context/PlayerContext";
 type BoardCell = {
     playerId: number 
     id: number 
@@ -40,26 +41,33 @@ const Board = (props: PlayerContextProps ) => {
     const [qazandyq2, setQazandyq2] = useState<number>(0);
     const [tuzdyq1, setTuzdyq1] = useState(-1);
     const [tuzdyq2, setTuzdyq2] = useState(-1);
-    const {player1, player2} = props;
+    const [winner, setWinner] = useState(-1);
+    const [popupOpen, setPopupOpen] = useState(false);
+    const context = usePlayerContext();
     
-    useEffect(() => {
-         
-    }, [tuzdyq1])
 
-    useEffect(() => {
-
-    }, [tuzdyq2])
-     
-    useEffect(() => {
-         props.player1?.setScore(qazandyq1);
-    }, [qazandyq1])
-
-    useEffect(() => {
-        props.player2?.setScore(qazandyq2)
-    }, [qazandyq2])
 
     function switchTurn(playerId: number) {
         setCurrentPlayer(playerId ==0 ? 1 : 0)
+    }
+    useEffect(() => {
+        isWinner()
+    }, [qazandyq1])
+
+    useEffect(() => {
+        isWinner()
+    },[qazandyq2])
+    function isWinner() {
+        if(qazandyq1 >= 81) {
+            setWinner(0)
+            context.setContextWinner(0)
+            setPopupOpen(true)
+        }
+        else if(qazandyq2 >= 81){
+            setWinner(1);
+            context.setContextWinner(1)
+            setPopupOpen(true)
+        }
     }
     function setTuzdyq(tempBoard:{
         playerId: number;
@@ -75,10 +83,14 @@ const Board = (props: PlayerContextProps ) => {
 
         if(currentPlayer ==0) {
             setTuzdyq1(id);
+            setPopupOpen(true)
         }
         else if(currentPlayer == 1) {
             setTuzdyq2(id);
+            setPopupOpen(true)
         }
+
+        context.setContextTuzdyq(id, tempBoard[id].playerId)
     }
 
     function getIndex(playerId: number, id: number) {
@@ -94,8 +106,11 @@ const Board = (props: PlayerContextProps ) => {
     }
     
     function makeMove(el: BoardCell) {
+        console.log("here " + el.playerId)
+        console.log(el)
         //check if the click was from the current player
-        if (currentPlayer === el.playerId) {
+        if(currentPlayer === el.playerId) {
+            console.log(currentPlayer +  ' ' + el.playerId)
             //get the index of an object in initBoard
             const curOtauInd = getIndex(el.playerId, el.id);
             // the num of qumalaq
@@ -135,18 +150,24 @@ const Board = (props: PlayerContextProps ) => {
             opponentPlayerScore += scoreFromTuzdyq2;
             if (currentPlayer === 0) {
                 setQazandyq1(currentPlayerScore);
+                context.setContextScore(currentPlayerScore, 0)
                 setQazandyq2(opponentPlayerScore);
+                context.setContextScore(opponentPlayerScore, 1)
             } else {
                 setQazandyq1(opponentPlayerScore);
+                context.setContextScore(opponentPlayerScore, 0)
                 setQazandyq2(currentPlayerScore);
+                context.setContextScore(currentPlayerScore, 1)
             }
 
 
             if((result % 2 == 0 || result == 3) && tempBoard[nextOtauInd].playerId!= currentPlayer) {
                 if (currentPlayer === 0) {
                   setQazandyq1(tempBoard[nextOtauInd].count + qazandyq1);
+                  context.setContextScore(tempBoard[nextOtauInd].count, 0)
                 } else {
                   setQazandyq2(tempBoard[nextOtauInd].count + qazandyq2);
+                  context.setContextScore(tempBoard[nextOtauInd].count, 1)
                 }
           
                 if (result === 3 && !isTuzdyq()) {
@@ -156,10 +177,10 @@ const Board = (props: PlayerContextProps ) => {
             }
             
             
+            
             switchTurn(el.playerId);
           }
-        
-    }
+            }
     return(
         <div className='board'>
         <div className='side1'>
@@ -187,6 +208,11 @@ const Board = (props: PlayerContextProps ) => {
                 ))}
             </div>
         </div>
+        
+        {popupOpen && (tuzdyq1!= -1 || tuzdyq2 != -1) && (<Popup action='tuzdyq' show={popupOpen} setShow={setPopupOpen}/>)}
+        
+        
+        {popupOpen && winner!= -1 && (<Popup action='winner' show={popupOpen} setShow={setPopupOpen}/>)}
     </div>
     )
 }
