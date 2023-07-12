@@ -100,9 +100,8 @@ const Board = (props: PlayerContextProps ) => {
             const curOtauInd = getIndex(el.playerId, el.id);
             // the num of qumalaq
             let qumalaqs = el.count;
-            // of 0 then stop
-            if (qumalaqs <= 0) return;
-            if(qumalaqs == 1) return;
+            // if 0 or 1 then stop
+            if (qumalaqs <=1) return;
             // save the board to temporary array and leave 1 to current otau
             const tempBoard = [...board];
             tempBoard[curOtauInd].count = 1;
@@ -113,46 +112,54 @@ const Board = (props: PlayerContextProps ) => {
             var scoreFromTuzdyq2 = 0;
             while (qumalaqs > 0) {
                 // increment the num of qumalaq for otau at index nextOtauInd
-                // tempBoard[nextOtauInd].tuzdyq && tempBoard[nextOtauInd].playerId == 0 ? scoreFromTuzdyq1++ : ''
-                // tempBoard[nextOtauInd].tuzdyq && tempBoard[nextOtauInd].playerId == 1 ? scoreFromTuzdyq2++ : ''
-                // !tempBoard[nextOtauInd].tuzdyq ? tempBoard[nextOtauInd].count++ : '';
-                tempBoard[nextOtauInd].count++ 
-                console.log(qumalaqs + " at " + nextOtauInd )
+                if (tempBoard[nextOtauInd].tuzdyq && tempBoard[nextOtauInd].playerId === 0) {
+                    scoreFromTuzdyq1++;
+                  } else if (tempBoard[nextOtauInd].tuzdyq && tempBoard[nextOtauInd].playerId === 1) {
+                    scoreFromTuzdyq2++;
+                  } else {
+                    tempBoard[nextOtauInd].count++;
+                  }
                 qumalaqs--;
                 nextOtauInd = (nextOtauInd + 1) % tempBoard.length;
             }
             nextOtauInd--;
+
             setBoard(tempBoard);
-            var result = tempBoard[nextOtauInd].count;
+            // the problem is the score from your own side is not counted
+            
+            const result = tempBoard[nextOtauInd].count;
+            var currentPlayerScore = currentPlayer === 0 ? qazandyq1 : qazandyq2;
+            var opponentPlayerScore = currentPlayer === 0 ? qazandyq2 : qazandyq1;
+
+            currentPlayerScore += scoreFromTuzdyq1;
+            opponentPlayerScore += scoreFromTuzdyq2;
+            if (currentPlayer === 0) {
+                setQazandyq1(currentPlayerScore);
+                setQazandyq2(opponentPlayerScore);
+            } else {
+                setQazandyq1(opponentPlayerScore);
+                setQazandyq2(currentPlayerScore);
+            }
+
+
             if((result % 2 == 0 || result == 3) && tempBoard[nextOtauInd].playerId!= currentPlayer) {
-                var qazan1= qazandyq1 + scoreFromTuzdyq1 + tempBoard[nextOtauInd].count
-                var qazan2 =qazandyq2 + scoreFromTuzdyq2 + tempBoard[nextOtauInd].count
-                currentPlayer==0 ? setQazandyq2(qazan2) : setQazandyq1(qazan1);
-                if(result == 3 && !isTuzdyq()) {
-                    setTuzdyq(tempBoard, nextOtauInd)
+                if (currentPlayer === 0) {
+                  setQazandyq1(tempBoard[nextOtauInd].count + qazandyq1);
+                } else {
+                  setQazandyq2(tempBoard[nextOtauInd].count + qazandyq2);
+                }
+          
+                if (result === 3 && !isTuzdyq()) {
+                  setTuzdyq(tempBoard, nextOtauInd);
                 }
                 tempBoard[nextOtauInd].count = 0;
             }
+            
             
             switchTurn(el.playerId);
           }
         
     }
-
-    const renderBoardSide = (playerId: number) => {
-        return (
-          <div className="otaular">
-            {board
-              .filter((player) => player.playerId === playerId)
-              .reverse()
-              .map((el) => (
-                <div className="otau" onClick={() => makeMove(el)}>
-                  <Otau quantity={el.count} tuzdyq={el.tuzdyq} />
-                </div>
-              ))}
-          </div>
-        );
-      };
     return(
         <div className='board'>
         <div className='side1'>
@@ -164,13 +171,13 @@ const Board = (props: PlayerContextProps ) => {
                 ))}
             </div>
             <div className='qazandyq'>
-                <Qazandyq score = {qazandyq1}/>
+                <Qazandyq score = {qazandyq2}/>
             </div>
         </div>
 
         <div className='side2'>
             <div className='qazandyq'>
-                <Qazandyq score = {qazandyq2}/>
+                <Qazandyq score = {qazandyq1}/>
             </div>
             <div className='otaular flex'>
                 {board.filter(player => player.playerId == 1).map((el) => (
