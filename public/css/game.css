@@ -119,6 +119,12 @@
     width: 28px;
     height: 28px;
 }
+.regular {
+    background-color: #ECB365;
+}
+.tuzdyq {
+    background-color: rgb(209, 60, 52);
+}
 
 @media(max-width:1052px) {
     .game {

@@ -1,8 +1,15 @@
 'use client';
 import '/public/css/game.css';
-const Ball = () => {
+
+const type = ['regular' , 'tuzdyq']
+
+type PropsType = {
+   type?: string
+}
+const Ball = ({type='regular'}:PropsType) => {
+   
    return(
-    <div className="ball bg-dark2 rounded-full m-1 border border-black"></div>
+    <div className={`ball ${type} rounded-full m-1 border border-black`}></div>
    )
 }
 export default Ball;

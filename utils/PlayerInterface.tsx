@@ -6,6 +6,9 @@ export interface PlayerContextType {
     createPlayers: (user1: string, user2: string) => void
 }
 export interface PlayerContextProps {
-  player1: Player | null, 
-  player2 : Player | null, 
+  player1: Player | null
+  player2 : Player | null
+}
+export interface GeneralPlayerContext {
+  player: Player | null
 }

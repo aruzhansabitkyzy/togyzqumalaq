@@ -30,9 +30,9 @@ export function PlayerProvider(props:PlayerPropsInterface) {
     function setTuzdyq(otauId: number, playerId: number) {
         
     }
-    function setScore(score: number, playerId: number) {
-        playerId==0 ? player1?.setScore(score) : player2?.setScore(score);
-    }
+    // function setScore(score: number) {
+    //     setPlayer1(score)
+    // }
 
     // function setTurn(playerIndex: number) {
     //     if(playerIndex == 0 && player1 && player2) {

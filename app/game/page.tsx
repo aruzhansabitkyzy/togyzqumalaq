@@ -17,8 +17,8 @@ const Game = () => {
          </div>
          <div className='game__players'>
              <div className='players'>
-               <span><PlayerBanner player1 ={player1} player2 = {player2}/></span> 
-                <span><PlayerBanner player1 ={player1} player2 = {player2}/></span>
+                <span><PlayerBanner player ={player1}/></span> 
+                <span><PlayerBanner player = {player2}/></span>
              </div>
              <div className="game__buttons">
               <span><Button children={'Reset'} size={'btn-large'} onClick={() => {console.log("reset")}}/></span>
