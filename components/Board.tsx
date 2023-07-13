@@ -49,13 +49,6 @@ const Board = () => {
     function switchTurn(playerId: number) {
         setCurrentPlayer(playerId ==0 ? 1 : 0)
     }
-    useEffect(() => {
-        isWinner()
-    }, [qazandyq1])
-
-    useEffect(() => {
-        isWinner()
-    },[qazandyq2])
     function isWinner() {
         if(qazandyq1 >= 81) {
             setWinner(0)
@@ -178,6 +171,7 @@ const Board = () => {
             
             
             switchTurn(el.playerId);
+            isWinner();
           }
             }
     return(
@@ -185,7 +179,7 @@ const Board = () => {
         <div className='side1'>
             <div className='otaular'>
                 {board.filter(player => player.playerId == 0).reverse().map((el) => (
-                    <div className='otau' onClick={() => makeMove(el)}>
+                    <div className='otau' key={el.playerId+el.id} onClick={() => makeMove(el)}>
                     <Otau quantity={el.count} tuzdyq={el.tuzdyq}/>
                     </div>
                 ))}
@@ -201,7 +195,7 @@ const Board = () => {
             </div>
             <div className='otaular flex'>
                 {board.filter(player => player.playerId == 1).map((el) => (
-                    <div className='otau' onClick={() => makeMove(el)}>
+                    <div className='otau' key={el.playerId+el.id} onClick={() => makeMove(el)}>
                     <Otau quantity={el.count} tuzdyq={el.tuzdyq}/>
                     </div>
                 ))}

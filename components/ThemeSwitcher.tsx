@@ -1,6 +1,7 @@
 "use client";
 import {useState, useEffect, useContext} from 'react';
 import { MyThemeContext } from '@/context/ThemeContext';
+import Image from 'next/image';
 const ThemeSwitcher =() => {
     const themeCtx: { isDarkMode?: boolean; setLightThemeHandler: () => void; setDarkThemeHandler: () => void} =
     useContext(MyThemeContext);
@@ -25,7 +26,7 @@ const ThemeSwitcher =() => {
             <div className='popup__option' onClick={setDarkTheme}>
                 <div className={`popup__option_circle ${isDark=='true' ? 'bg-dark2' : ''}`}>
                        {isDark=='true'  ? 
-                       (<img src={'/images/tick.png'}/>)
+                       (<Image src={'/images/tick.png'} alt="Tick for Dark"/>)
                     : ('')}
                 </div>
                 <div className='popup__option_text text-black dark:text-white'>dark</div>
@@ -33,7 +34,7 @@ const ThemeSwitcher =() => {
             <div className='popup__option' onClick={setLightTheme}>
                 <div className={`popup__option_circle ${isDark=='false' ? 'bg-light2' : ''}`}>
                 {isDark=='false'  ?
-                       (<img src={'/images/tick.png'}/>)
+                       (<Image src={'/images/tick.png'} alt="Tick for Light"/>)
                     : ('')}
                 </div>
                 <div className='popup__option_text text-black dark:text-white'>light</div>
