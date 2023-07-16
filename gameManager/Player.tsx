@@ -32,5 +32,14 @@ class Player {
     isTuzdyq() {
          return this.getTuzdyq() != -1 
     }
+    setTurn() {
+        this.isGoing = true;
+    }
+    passTurn() {
+        this.isGoing = false;
+    }
+    getTurn() {
+        this.isGoing
+    }
 }
 export default Player;

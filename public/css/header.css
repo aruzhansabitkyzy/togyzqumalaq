@@ -45,3 +45,8 @@ a:first-child{
     margin-right: 24px;
 }
 
+@media(max-width: 854px) {
+    body {
+        display: none;
+    }
+}

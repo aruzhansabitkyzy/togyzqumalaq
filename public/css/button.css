@@ -26,3 +26,9 @@
 .yellow {
     background-color: #ECB365;
 }
+
+@media(max-width: 854px) {
+    body {
+        display: none;
+    }
+}

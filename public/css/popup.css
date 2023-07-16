@@ -48,3 +48,9 @@
     justify-content: space-around;
     margin-top: 30px;
 }
+
+@media(max-width: 854px) {
+    body {
+        display: none;
+    }
+}

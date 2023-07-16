@@ -12,6 +12,17 @@ type BoardCell = {
     hover: boolean,
     tuzdyq: boolean
 }
+type BoardPropsType = {
+    values: {
+        currentPlayer: number,
+        qazandyq1: number,
+        qazandyq2: number,
+        tuzdyq1: number, 
+        tuzdyq2: number,
+        winner : number
+    }
+    setValues: Function
+}
 const initBoard: BoardCell[] = [
     { playerId: 1, id: 1, count: 9, hover: false, tuzdyq: false },
     { playerId: 1, id: 2, count: 9, hover: false, tuzdyq: false },
@@ -33,7 +44,7 @@ const initBoard: BoardCell[] = [
     { playerId: 0, id: 9, count: 9, hover: false, tuzdyq: false },
 ]
 
-const Board = () => {
+const Board = (props: BoardPropsType) => {
     const [board, setBoard] = useState(initBoard);
     const [currentPlayer, setCurrentPlayer] = useState(0);
     const [qazandyq1, setQazandyq1] = useState<number>(0);
@@ -42,12 +53,45 @@ const Board = () => {
     const [tuzdyq2, setTuzdyq2] = useState(-1);
     const [winner, setWinner] = useState(-1);
     const [popupOpen, setPopupOpen] = useState(false);
+    const [showHint, setShowHint] = useState(false);
     const context = usePlayerContext();
     
+    useEffect(() => {
+        props.setValues({...props.values, currentPlayer: currentPlayer})
+    }, [currentPlayer])
 
+    useEffect(() => {
+        props.setValues({...props.values, qazandyq1: qazandyq1})
+    },[qazandyq1])
+    
+    useEffect(() => {
+        props.setValues({...props.values, qazandyq2: qazandyq2})
+    },[qazandyq2])
+
+    useEffect(() => {
+        props.setValues({...props.values, tuzdyq1: tuzdyq1})
+    }, [tuzdyq1])
+
+    useEffect(() => {
+        props.setValues({...props.values, tuzdyq2: tuzdyq2})
+    }, [tuzdyq2])
+
+    useEffect(() => {
+        props.setValues({...props.values, winner: winner})
+    }, [winner])
 
     function switchTurn(playerId: number) {
-        setCurrentPlayer(playerId ==0 ? 1 : 0)
+        if(playerId == 0) {
+            setCurrentPlayer(1);
+        
+            context.turnPlayer2();
+            context.removeTurnPlayer1()
+        }
+        else {
+            setCurrentPlayer(0);
+            context.turnPlayer1()
+            context.removeTurnPlayer2()
+        }
     }
     function isWinner() {
         if(qazandyq1 >= 81) {
@@ -90,6 +134,33 @@ const Board = () => {
             return object.id == id && object.playerId==playerId
         })
         return index;
+    }
+
+    function hintGoal(el:BoardCell) {
+        console.log("in")
+        if(currentPlayer === el.playerId) {
+            const curOtauInd = getIndex(el.playerId, el.id);
+            
+            // the num of qumalaq
+            let qumalaqs = el.count;
+            if (qumalaqs <=1) return;
+            const goal = (curOtauInd + (qumalaqs-1)) % board.length;
+            const tempBoard = [...board];
+            tempBoard[goal].hover = true;
+            setBoard(tempBoard);
+            console.log(goal);
+        }
+    }
+
+    function unhint(el:BoardCell) {
+        const tempBoard = [...board];
+        tempBoard.findIndex(obj => {
+            obj.hover == true ? obj.hover=false : obj
+        })
+
+
+        setBoard(tempBoard);
+        console.log("out");
     }
 
     function isTuzdyq() {
@@ -135,30 +206,15 @@ const Board = () => {
             // the problem is the score from your own side is not counted
             
             const result = tempBoard[nextOtauInd].count;
-            var currentPlayerScore = currentPlayer === 0 ? qazandyq1 : qazandyq2;
-            var opponentPlayerScore = currentPlayer === 0 ? qazandyq2 : qazandyq1;
 
-            currentPlayerScore += scoreFromTuzdyq1;
-            opponentPlayerScore += scoreFromTuzdyq2;
-            if (currentPlayer === 0) {
-                setQazandyq1(currentPlayerScore);
-                context.setContextScore(currentPlayerScore, 0)
-                setQazandyq2(opponentPlayerScore);
-                context.setContextScore(opponentPlayerScore, 1)
-            } else {
-                setQazandyq1(opponentPlayerScore);
-                context.setContextScore(opponentPlayerScore, 0)
-                setQazandyq2(currentPlayerScore);
-                context.setContextScore(currentPlayerScore, 1)
-            }
-
+            
 
             if((result % 2 == 0 || result == 3) && tempBoard[nextOtauInd].playerId!= currentPlayer) {
                 if (currentPlayer === 0) {
-                  setQazandyq1(tempBoard[nextOtauInd].count + qazandyq1);
+                  setQazandyq1(tempBoard[nextOtauInd].count + qazandyq1 + scoreFromTuzdyq1);
                   context.setContextScore(tempBoard[nextOtauInd].count, 0)
                 } else {
-                  setQazandyq2(tempBoard[nextOtauInd].count + qazandyq2);
+                  setQazandyq2(tempBoard[nextOtauInd].count + qazandyq2 + scoreFromTuzdyq2);
                   context.setContextScore(tempBoard[nextOtauInd].count, 1)
                 }
           
@@ -167,20 +223,24 @@ const Board = () => {
                 }
                 tempBoard[nextOtauInd].count = 0;
             }
-            
-            
+            else {
+                setQazandyq1(qazandyq1+ scoreFromTuzdyq1);
+                context.setContextScore(scoreFromTuzdyq1, 0)
+                setQazandyq2(qazandyq2 + scoreFromTuzdyq2);
+                context.setContextScore(scoreFromTuzdyq2, 1)
+            }
             
             switchTurn(el.playerId);
             isWinner();
           }
-            }
+    }
     return(
         <div className='board'>
         <div className='side1'>
             <div className='otaular'>
                 {board.filter(player => player.playerId == 0).reverse().map((el) => (
-                    <div className='otau' key={el.playerId+el.id} onClick={() => makeMove(el)}>
-                    <Otau quantity={el.count} tuzdyq={el.tuzdyq}/>
+                    <div className='otau' key={el.playerId+el.id} onClick={() => makeMove(el)} onMouseEnter={() =>hintGoal(el)} onMouseLeave={() => unhint(el)}>
+                    <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover}/>
                     </div>
                 ))}
             </div>
@@ -195,8 +255,8 @@ const Board = () => {
             </div>
             <div className='otaular flex'>
                 {board.filter(player => player.playerId == 1).map((el) => (
-                    <div className='otau' key={el.playerId+el.id} onClick={() => makeMove(el)}>
-                    <Otau quantity={el.count} tuzdyq={el.tuzdyq}/>
+                    <div className='otau' key={el.playerId+el.id} onClick={() => makeMove(el)}  onMouseEnter={() => hintGoal(el)} onMouseLeave={() => unhint(el)}>
+                    <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover}/>
                     </div>
                 ))}
             </div>

@@ -5,7 +5,8 @@ import '/public/css/game.css'
 
 type PropsType = {
     quantity: number,
-    tuzdyq: boolean
+    tuzdyq: boolean,
+    hover: boolean
 }
 
 const Otau = (props:PropsType) => {
@@ -23,7 +24,7 @@ const Otau = (props:PropsType) => {
         <>
         
         {tuzdyq == false ? (
-            <div className='otau-in'>
+            <div className={`otau-in ${props.hover==true ? 'otau-hover' : ''} `}>
                 <div className='cur__quantity'>{quantity}</div>
                 <div className='col1'>
                     {col1 && col1.map((el) => (
@@ -47,8 +48,8 @@ const Otau = (props:PropsType) => {
                 </div>
             </div>
         ) : (
-            <div className='otau-in'>
-                <div className='cur__quantity'>{quantity}</div>
+            <div className={`otau-in ${props.hover==true ? 'otau-hover' : ''} `}>
+                
                 <div className='col1'>
                         <Ball type={'tuzdyq'}/>
                 </div>
