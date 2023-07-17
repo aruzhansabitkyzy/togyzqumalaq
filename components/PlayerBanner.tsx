@@ -1,6 +1,4 @@
 'use client';
-import {useEffect, useState} from 'react';
-import { GeneralPlayerContext } from "@/utils/PlayerInterface";
 import { usePlayerContext } from "@/context/PlayerContext";
 
 function PlayerBanner() {

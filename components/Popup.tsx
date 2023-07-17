@@ -11,7 +11,11 @@ const THEMES = ['dark' , 'light']
 type Props  = {
     action: string,
     show: boolean, 
-    setShow: Function
+    setShow: Function,
+    action2?: boolean,
+    setAction2?: Function,
+    action3?: boolean,
+    setAction3?: Function,
 }
 const Popup = (props:Props) => {
 
@@ -35,6 +39,8 @@ const Popup = (props:Props) => {
            {type=='theme' && ( <PopupBody action={type}  show={props.show} setShow={props.setShow}/>)}
            {type=='tuzdyq' && (<GamePopup type={type} show={props.show} setShow={props.setShow}/>)}
            {type=='winner' && (<GamePopup type={type} show={props.show} setShow={props.setShow}/>)}
+           {type=='reset' && (<GamePopup type={type} show={props.show} setShow={props.setShow} action2={props.action2} setAction2={props.setAction2}/>)}
+           {type=='exit' && (<GamePopup type={type} show={props.show} setShow={props.setShow} action2={props.action2} setAction2={props.setAction2} action3={props.action3} setAction3={props.setAction3}/>)}
         </div>
       </div>
    )

@@ -42,7 +42,7 @@ export function PlayerProvider(props:PlayerPropsInterface) {
     }
 
     function setContextScore(score: number, playerId: number) {
-        playerId == 0 ? player1?.setScore(score) : player2?.setScore(score);
+        playerId == 0 ? player1?.setScore(player1.getScore() + score) : player2?.setScore(player2.getScore() + score);
     }
 
     function setContextWinner(playerId: number) {

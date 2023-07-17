@@ -15,10 +15,15 @@ class Player {
 
     setScore(score:number) {
          if(typeof score === 'number')
-            this.score+= score
+            this.score= score
     }
     setWinner(flag: boolean) {
        this.isWinner =flag;
+    }
+    reset() {
+        this.tuzdyq = -1;
+        this.score = 0;
+        this.isGoing = false;
     }
     getScore() {
         return this.score

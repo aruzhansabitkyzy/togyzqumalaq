@@ -31,19 +31,13 @@
     float: right;
     cursor: pointer;
 }
-.tuzdyqPopup h1 {
+.content h1 {
     text-align: center;
     color: white;
     font-size: 25px;    
     padding-top: 15%;
 }
-.winnerPopup h1 {
-    text-align: center;
-    color: white;
-    font-size: 25px;    
-    padding-top: 15%;
-}
-.winnerPopup__btns {
+.content__btns {
     display: flex;
     justify-content: space-around;
     margin-top: 30px;

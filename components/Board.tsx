@@ -21,7 +21,8 @@ type BoardPropsType = {
         tuzdyq2: number,
         winner : number
     }
-    setValues: Function
+    setValues: Function,
+    reset: boolean
 }
 const initBoard: BoardCell[] = [
     { playerId: 1, id: 1, count: 9, hover: false, tuzdyq: false },
@@ -76,6 +77,22 @@ const Board = (props: BoardPropsType) => {
         props.setValues({...props.values, tuzdyq2: tuzdyq2})
     }, [tuzdyq2])
 
+    useEffect(() => {
+         if(props.reset == true) {            
+            var tempBoard = [...board];
+            tempBoard.map(obj => obj.count=9);
+            tempBoard.map(obj => obj.tuzdyq=false);
+            setQazandyq1(0);
+            setQazandyq2(0);
+            context.player1?.reset();
+            context.player2?.reset();
+            setTuzdyq1(-1);
+            setTuzdyq2(-1);
+            setCurrentPlayer(0);
+            context.turnPlayer1();
+            setWinner(-1);
+         }
+    },[props.reset])
     useEffect(() => {
         props.setValues({...props.values, winner: winner})
     }, [winner])

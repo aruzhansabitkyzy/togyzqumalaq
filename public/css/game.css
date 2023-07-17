@@ -55,8 +55,7 @@
     position: relative;
 }
 .otau-hover {
-    outline: 4px solid rgb(209, 60, 52);
-    zoom: 105%;
+    background-color: rgba(209, 60, 52, 0.5);
 }
 .upper_col1 {
     position: absolute;
@@ -74,8 +73,8 @@
     height: 20px;
     background-color: white;
     border-radius: 100%;
-    padding-left: 3px;
-    padding-bottom: 5px;
+    padding-left: 4px;
+    padding-bottom: 15px;
     z-index: 10;
 }
 .otaular {
