@@ -3,6 +3,7 @@ import { usePlayerContext } from "@/context/PlayerContext";
 import Button from "./ui/Button/Button";
 import '/public/css/popup.css';
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 type PropsType = {
     type: string,
     show: boolean,
@@ -15,17 +16,7 @@ type PropsType = {
 const GamePopup = (props: PropsType) => {
      const router= useRouter();
      const context = usePlayerContext()    
-  
 
-
-     const tuzdyq = ()  => {
-        if(context.player1?.isTuzdyq) {
-            return context.player1.username
-        }
-        else if(context.player2?.isTuzdyq) {
-            return context.player2.username
-        }
-     } 
      const winner = () => {
         if(context.player1?.isWinner) {
             return context.player1.username
@@ -50,7 +41,7 @@ const GamePopup = (props: PropsType) => {
         <>
            {props.type == 'tuzdyq' && (
                <div className="content">
-                    <h1>{tuzdyq()} got Tuzdyq</h1>
+                    <h1>{context.player1?.isGoing ? context.player2?.username : context.player1?.username} got Tuzdyq</h1>
                </div>
            )}
            {props.type == 'winner' && (

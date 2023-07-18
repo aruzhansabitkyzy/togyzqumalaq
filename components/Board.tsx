@@ -134,11 +134,11 @@ const Board = (props: BoardPropsType) => {
             tempBoard[id].tuzdyq = true;
         }
 
-        if(currentPlayer ==0) {
+        if(currentPlayer ==0 && tuzdyq1==-1) {
             setTuzdyq1(id);
             setPopupOpen(true)
         }
-        else if(currentPlayer == 1) {
+        else if(currentPlayer == 1 && tuzdyq2 == -1) {
             setTuzdyq2(id);
             setPopupOpen(true)
         }
@@ -186,11 +186,8 @@ const Board = (props: BoardPropsType) => {
     }
     
     function makeMove(el: BoardCell) {
-        console.log("here " + el.playerId)
-        console.log(el)
         //check if the click was from the current player
         if(currentPlayer === el.playerId) {
-            console.log(currentPlayer +  ' ' + el.playerId)
             //get the index of an object in initBoard
             const curOtauInd = getIndex(el.playerId, el.id);
             // the num of qumalaq
@@ -208,9 +205,9 @@ const Board = (props: BoardPropsType) => {
             while (qumalaqs > 0) {
                 // increment the num of qumalaq for otau at index nextOtauInd
                 if (tempBoard[nextOtauInd].tuzdyq && tempBoard[nextOtauInd].playerId === 0) {
-                    scoreFromTuzdyq1++;
-                  } else if (tempBoard[nextOtauInd].tuzdyq && tempBoard[nextOtauInd].playerId === 1) {
                     scoreFromTuzdyq2++;
+                  } else if (tempBoard[nextOtauInd].tuzdyq && tempBoard[nextOtauInd].playerId === 1) {
+                    scoreFromTuzdyq1++;
                   } else {
                     tempBoard[nextOtauInd].count++;
                   }
@@ -218,10 +215,10 @@ const Board = (props: BoardPropsType) => {
                 nextOtauInd = (nextOtauInd + 1) % tempBoard.length;
             }
             nextOtauInd--;
-
             setBoard(tempBoard);
             // the problem is the score from your own side is not counted
-            
+            console.log(nextOtauInd);
+            console.log(tempBoard[nextOtauInd])
             const result = tempBoard[nextOtauInd].count;
 
             
@@ -229,12 +226,15 @@ const Board = (props: BoardPropsType) => {
             if((result % 2 == 0 || result == 3) && tempBoard[nextOtauInd].playerId!= currentPlayer) {
                 if (currentPlayer === 0) {
                   setQazandyq1(tempBoard[nextOtauInd].count + qazandyq1 + scoreFromTuzdyq1);
-                  context.setContextScore(tempBoard[nextOtauInd].count, 0)
+                  context.setContextScore(tempBoard[nextOtauInd].count + scoreFromTuzdyq1, 0);
+                  setQazandyq2(qazandyq2 + scoreFromTuzdyq2);
+                  context.setContextScore(scoreFromTuzdyq2, 1)
                 } else {
                   setQazandyq2(tempBoard[nextOtauInd].count + qazandyq2 + scoreFromTuzdyq2);
-                  context.setContextScore(tempBoard[nextOtauInd].count, 1)
+                  context.setContextScore(tempBoard[nextOtauInd].count + scoreFromTuzdyq2, 1);
+                  setQazandyq1(qazandyq1 + scoreFromTuzdyq1);
+                  context.setContextScore(scoreFromTuzdyq1, 0);
                 }
-          
                 if (result === 3 && !isTuzdyq()) {
                   setTuzdyq(tempBoard, nextOtauInd);
                 }

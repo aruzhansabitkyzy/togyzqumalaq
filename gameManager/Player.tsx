@@ -35,7 +35,7 @@ class Player {
         return this.tuzdyq
     }
     isTuzdyq() {
-         return this.getTuzdyq() != -1 
+        return this.getTuzdyq() != -1 
     }
     setTurn() {
         this.isGoing = true;

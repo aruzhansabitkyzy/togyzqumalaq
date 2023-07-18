@@ -38,7 +38,7 @@ export function PlayerProvider(props:PlayerPropsInterface) {
 
 
     function setContextTuzdyq(otauId: number, playerId: number) {
-        playerId == 0 ?  player1?.setTuzdyq(otauId) : player2?.setTuzdyq(otauId)
+        playerId == 0 ?  player2?.setTuzdyq(otauId) : player1?.setTuzdyq(otauId)
     }
 
     function setContextScore(score: number, playerId: number) {

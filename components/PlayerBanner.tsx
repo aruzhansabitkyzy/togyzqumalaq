@@ -1,8 +1,11 @@
 'use client';
+import {useEffect} from 'react';
 import { usePlayerContext } from "@/context/PlayerContext";
 
 function PlayerBanner() {
     const context = usePlayerContext();
+
+    
     
     return(
         <>
