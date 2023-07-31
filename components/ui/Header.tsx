@@ -2,8 +2,8 @@
 import '/public/css/header.css';
 import {useEffect, useState} from 'react';
 import React from 'react';
-import Popup from './Popup';
-import OrnamentSquare from './ui/Ornament/OrnamentSquare';
+import Popup from '../Popup';
+import OrnamentSquare from './OrnamentSquare';
 import { useRouter } from 'next/navigation';
 
 const Header = () => {

@@ -1,8 +1,7 @@
 import './globals.css'
 import { Kanit } from 'next/font/google'
-import Header from '../components/Header'
+import Header from '../components/ui/Header'
 import { MyThemeContextProvider } from '@/context/ThemeContext'
-import { PlayerProvider } from '@/context/PlayerContext'
 
 const kanit = Kanit({ subsets: ['latin'], weight:'400' })
 
@@ -20,12 +19,10 @@ export default function RootLayout({
           <body className={kanit.className}>
            
               <MyThemeContextProvider>
-              <PlayerProvider>
                 <Header />
                 <main>
                       {children}
                 </main>
-                </PlayerProvider>
               </MyThemeContextProvider>
            
              

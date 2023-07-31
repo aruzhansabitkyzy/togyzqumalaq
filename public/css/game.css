@@ -6,10 +6,11 @@
 
 
 /*  playerbanner */
-.game__players {
+.sideBar {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 .current {
     background-color: rgba(255,255,255,1);
@@ -25,47 +26,75 @@
     margin-bottom: 30px;
     padding: 10px;
     text-align: center;
+    background-color: white;
 }
-
-.game__buttons {
+.player__turn {
+    color: rgb(rgb(17, 84, 7), green, blue)
+}
+.buttons{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 100%;
+    height: 50%;
 }
 /*  board */
 .board {
     background-color: #796349;
     padding: 15px;
-}
-.game__board {
     width: 80%;
+}
+.otaus {
+    display: flex;
+    justify-content: space-between;
 }
 
 /*  otau */
-.otau{
-    background-color: #F6EDDD;
-}
 .otau-in {
-    width: 80px;
-    height:162px;
+    background-color: #F6EDDD;
+    -webkit-box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
+    border-radius: 5px;
+    width: 90px;
+    height:182px;
     display: flex;
     justify-content: space-between;
+    padding-left: 3px;
     cursor: pointer;
     position: relative;
+}
+.otau__balls {
+    width: 90px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 .otau-hover {
     background-color: rgba(209, 60, 52, 0.5);
 }
-.upper_col1 {
+.otau__balls__overflow-c1 {
     position: absolute;
-    top: 1%;
-    left: 12%;
+    display: flex;
+    flex-direction: column; 
+    left: 11%;
 }
-.upper_col2 {
+.otau__balls__overflow-c2 {
     position: absolute;
-    top: 1%;
-    left: 47%;
+    display: flex;
+    flex-direction: column; 
+    left: 44%;
+}
+.otau__balls__overflow2-c1 {
+    position: absolute;
+    display: flex;
+    flex-direction: column; 
+    left: 20%;
+}
+.otau__balls__overflow2-c2 {
+    position: absolute;
+    display: flex;
+    flex-direction: column; 
+    left: 38%;
 }
 .cur__quantity {
     position: absolute;
@@ -88,8 +117,23 @@
     width: 100%;
     height: 70px;
     background-color: #F6EDDD;
-    margin-bottom: 10px;
+    margin: 10px 0;
     position: relative;
+    border-radius: 5px;
+}
+.qazandyq__balls {
+    display: flex;
+    flex-wrap: wrap;
+}
+.qazandyq__balls__r1 {
+    position: absolute;
+    display: flex;
+    top: 12%;
+}
+.qazandyq__balls__r2 {
+    position: absolute;
+    display: flex;
+    top: 32%;
 }
 .row1 {
     display: flex;
