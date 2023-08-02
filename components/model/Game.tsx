@@ -4,14 +4,15 @@ import React from "react";
 import { Board } from "./Board";
 import SideBar from "../ui/SideBar";
 //constants and interfaces
-import { initBoard } from "@/utils/constants";
-import { BoardCell, GameType } from "@/utils/interfaces";
+import { initBoard } from "@/lib/constants";
+import { BoardCell, GameType, Players } from "@/utils/interfaces";
 
-export default class Game extends React.Component<{}, GameType> {
+export default class Game extends React.Component<Players, GameType> {
     constructor(props:any) {
         super(props)
-
         this.state = {
+            player1:this.props.player1,
+            player2: this.props.player2,
             turn: Math.round(Math.random()),
             winner: -1,
             complete : false,
@@ -27,7 +28,6 @@ export default class Game extends React.Component<{}, GameType> {
 
     newGame() {
         localStorage.clear()
-        window.location.reload()
     }
 
     completed(winner : number) {

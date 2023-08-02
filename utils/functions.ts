@@ -1,6 +1,6 @@
 import { db } from "@/firebase";
 import {useRouter} from 'next/navigation'
-import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, arrayRemove, getDoc, setDoc } from "firebase/firestore";
 import { Player } from "./interfaces";
 
 export function lsGet(str:string) {
@@ -9,34 +9,52 @@ export function lsGet(str:string) {
 export function lsSet(str:string, val: any) {
     localStorage.setItem(str, JSON.stringify(val))
 }
-export async function createRoom(player:Player) {
+export async function createRoom(obj:any) {
+    const gameId =`${Math.random().toString(36).substr(2,9)}_${Date.now()}`
+    console.log(obj);
     const game = {
         status: "waiting",
-        players: [player],
-        gameId: `${Math.random().toString(36).substr(2,9)}_${Date.now()}`,
+        gameId: gameId,
+        obj: obj
     }
-    await db.collection('room').doc(JSON.stringify(game.gameId)).set({...game})
+    await db.collection('room').doc(game.gameId).set({...game})
     lsSet("mode", "online")
+    return gameId;
 };
-export async function joinRoom(player:Player, room:string) 
+export async function joinRoom(room:string, name: string) 
 {
-    const game = doc(db, "room", JSON.stringify(room));
+    const game = doc(db, "room", room);
     const docSnap = (await getDoc(game)).data();
     if(!docSnap) {
         console.log("not found")
-       return "Not Found"
+        return "Not found"
     }
-    
-    const creator = docSnap.players.find((p: Player) => p.creator === true)
-    console.log(creator)
-    console.log(docSnap.status + " "  +creator.uid + " " + player.uid)
+    let gameObj = docSnap.obj 
 
-    if(docSnap.status == 'waiting' && creator.uid != player.uid) {
+    if(gameObj.PLAYER_ONE) gameObj.PLAYER_TWO=name;
+    else gameObj.PLAYER_ONE = name;
+
+    if(docSnap.status == 'waiting') {
         console.log("here")
         await updateDoc(game, {
-            players: arrayUnion(player),
-            status: "ready"
+            status: "ready",
+            obj: gameObj
         });
     }
     lsSet("mode", "online")
+}
+export async function getData(gameId: string) {
+    const docRef = doc(db, "room", gameId);
+    const docSnap = await getDoc(docRef);
+    return docSnap?.data()
+}
+
+export async function sendData(gameId:string, data:any, status: string) {
+    const game = doc(db, "room", gameId);
+    const send = {
+        status: "ready",
+        gameId: gameId,
+        obj: data
+    }
+    await updateDoc(game, send);
 }

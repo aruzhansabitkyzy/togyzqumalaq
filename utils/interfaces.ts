@@ -6,6 +6,8 @@ export interface BoardCell  {
     tuzdyq: boolean
 }
 export interface GameType {
+    player1: Player,
+    player2: Player,
     turn: number, 
     winner: number, 
     complete: boolean, 
@@ -48,7 +50,15 @@ export interface BoardRead {
 }
 export interface Player {
     uid: string | undefined;
-    turnId: number;
     name: string;
     creator: boolean;
+}
+export interface Players {
+    player1: Player,
+    player2: Player
+}
+export interface RemoteData {
+    gameId: string,
+    players: Players,
+    status:string
 }

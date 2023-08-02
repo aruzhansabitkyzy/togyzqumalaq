@@ -2,43 +2,58 @@
 import {useState, useEffect, useContext} from 'react';
 import Button from '@/components/ui/Button'
 import '/public/css/home.css'
-
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createRoom, joinRoom } from '@/utils/functions';
-import {auth , db} from '../firebase';
+import {auth } from '../firebase';
+import GameOn from '@/components/model/GameOn';
+import { lsSet } from '@/utils/functions';
 import {onAuthStateChanged } from "firebase/auth";
 
 export default function Home() {
-    const [name1, setName1] = useState("");
-    const [name2, setName2] = useState("");
+    const [name, setName] = useState("");
     const [room, setRoom] = useState("");
-    
+    const [loading, setLoading] = useState(false)
+    const router = useRouter();
     const currentUser = auth.currentUser
     
     useEffect(() =>{
-        const sub = onAuthStateChanged(auth, (user) => {
+        // make sure the user is authenticated anonymously
+        onAuthStateChanged(auth, (user) => {
             console.log("Authenticated")
         });
-        return sub;
     }, [])
 
-    function handleCreate() {
-        const player = {
-            uid : currentUser?.uid,
-            turnId: 0,
-            name: name1,
-            creator: true
-        }
-        createRoom(player)
+    async function handleCreate() {
+        // creator info
+        let gameObj = JSON.parse(JSON.stringify(new GameOn(name, "null")));
+        gameObj.setTurn = name;
+        setLoading(true);
+        try {
+            let roomID = await createRoom({
+              ...gameObj,
+              PLAYER_ONE: name,
+            });
+            lsSet("user", currentUser?.uid);
+            router.push(`/room/${roomID}`);
+          } catch (error) {
+            console.log(error);
+          }
+        setLoading(false);
     }
-    function handleJoin() {
-        const player = {
-            uid : currentUser?.uid,
-            turnId: 1,
-            name: name1,
-            creator: false
-        }
-        joinRoom(player , room)
+    async function handleJoin() {
+        if (room.trim() === '' || name.trim() === '') return;
+        setLoading(true)
+        try {
+            await joinRoom(room, name);
+            lsSet("user", currentUser?.uid)
+            router.push(`/room/${room}`);
+          } catch (error) {
+            console.log(error);
+            alert('No such room! Please enter a valid Room ID');
+          }
+          setLoading(false);
+        // joiner info
     }
   return (
      <div className="home bg-light3 dark:bg-dark3">
@@ -65,15 +80,11 @@ export default function Home() {
              </div>
              <div className='home__right'>
                  <div className='home__play'>
-                       <label className='label text-black dark:text-white'>Player 1: </label>
+                       <label className='label text-black dark:text-white'>Player Name: </label>
                        <br />
-                       <input className='home__input' type='text' value={name1} onChange={(e) => setName1(e.target.value)}></input>
+                       <input className='home__input' type='text' value={name} onChange={(e) => setName(e.target.value)}></input>
                        <br />
-                       <label className='label text-black dark:text-white'>Player 2 : </label>
-                       <br />
-                       <input className='home__input' type='text' value={name2} onChange={(e) => setName2(e.target.value)}></input>
-                        <br />
-                       <label className='label text-black dark:text-white'>Room number : </label>
+                       <label className='label text-black dark:text-white'>Room ID : </label>
                        <br/>
                        <input className='home__input' type='text' value={room} onChange={(e) => setRoom(e.target.value) }></input> 
                        <br />
