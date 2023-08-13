@@ -1,43 +1,29 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { db } from '@/firebase';
-import GameApp from '@/components/model/Game';
-import { getData, lsGet } from '@/utils/functions';
-import { onSnapshot, doc, collection , getDoc, query, where} from 'firebase/firestore';
-import { Board } from '@/components/model/Board';
-import SideBar from '@/components/ui/SideBar';
-import { RemoteData } from '@/utils/interfaces';
-import Loading from '@/components/Loading';
-import Test from '@/components/Test';
+"use client";
+import { useParams } from "next/navigation";
+import Board from "@/components/model/Board";
+import SideBar from "@/components/ui/SideBar";
+import Loading from "@/components/Loading";
+import { getData } from "@/utils/functions";
+import { useQuery } from "@tanstack/react-query";
 export default function GamePage() {
-   const { gameId } = useParams() 
-   const [remoteData, setRemoteData] = useState({})
-  
-   useEffect(() => {
-      const unsubscribe = onSnapshot(doc(db, "room", gameId), (doc) => {
-         if (doc.exists()) {
-           setRemoteData(doc.data());
-         } else {
-           console.log("No such document!");
-         }
-       }, (error) => {
-         console.log("Error fetching document:", error);
-       });
+  const { gameId } = useParams();
 
-       return () => unsubscribe();
-    }, [gameId]);
+  const { status, data, error } = useQuery({
+    queryKey: ["room", gameId],
+    queryFn: () => getData(gameId),
+  });
 
-    return( 
-      <div className='game bg-light3 dark:bg-dark3'>
-         {remoteData && <Test remoteData={remoteData} /> }
-         
-         {/* <Board 
-              remoteData={remoteData}
-         />
-         <SideBar 
-              remoteData={remoteData}
-         /> */}
-  </div>
-   )
+  if (status == "loading") return <Loading />;
+  if (status == "error") return <h1>Error: {}</h1>;
+  return (
+    <div className="game bg-light3 dark:bg-dark3">
+      <Board remoteData={data} />
+      <SideBar remoteData={data} />
+    </div>
+  );
+  return (
+    <>
+      <h1> Hey </h1>
+    </>
+  );
 }

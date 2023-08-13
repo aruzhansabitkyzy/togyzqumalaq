@@ -1,64 +1,42 @@
-import React from 'react'
-import { BoardProps , BoardRead} from '@/utils/interfaces'
-import Otau from '../ui/Otau'
-import Qazandyq from '../ui/Qazandyq'
-export class Board extends React.Component<BoardProps, BoardRead> {
-      constructor(props:any) {
-        super(props)
+import React, { useState, useEffect } from "react";
+import { BoardCell } from "@/utils/interfaces";
+import Otau from "../ui/Otau";
+import Qazandyq from "../ui/Qazandyq";
 
-        this.state = {
-          board: this.props.board,
-          qazandyq1 : 0,
-          qazandyq2 : 0, 
-          tuzdyq1 : 0,
-          tuzdyq2 : 0
-        }
+export default function Board(props: any) {
+  const [remoteData, setRemoteData] = useState(props.remoteData);
 
-        this.handleMove = this.handleMove.bind(this)
-        this.checkMove = this.checkMove.bind(this)
-        this.checkTurn = this.checkTurn.bind(this)
-        this.setTuzdyq = this.setTuzdyq.bind(this)
-      }
-
-      checkMove() {
-
-      }
-      handleMove() {
-
-      }
-
-      checkTurn() {
-        
-      }
-
-      setTuzdyq() {
-
-      }
-      render() {
-
-        return (
-          <div className='board'>
-              <div className="board__side opponentSide">
-                   <div className='otaus'>
-                       {this.state.board.filter(player => player.playerId == 1).reverse().map((el) => (
-                           <div className='otau' key={el.playerId+el.id}>
-                                <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover}/>
-                           </div>
-                       ))}
-                   </div>
+  useEffect(() => {
+    setRemoteData(props.remoteData);
+  }, [props.remoteData]);
+  return (
+    <div className="board">
+      <div className="board__side opponentSide">
+        <div className="otaus">
+          {remoteData?.board
+            ?.filter((player: BoardCell) => player.playerId == 1)
+            .reverse()
+            .map((el: BoardCell) => (
+              <div className="otau" key={el.playerId + el.id}>
+                <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover} />
               </div>
-                <Qazandyq quantity = {this.state.qazandyq2}/>
-                <Qazandyq quantity = {this.state.qazandyq2}/>
-              <div className=" board__side mySide">
-                   <div className='otaus'>
-                   {this.state.board.filter(player => player.playerId == 2).reverse().map((el) => (
-                           <div className='otau' key={el.playerId+el.id}>
-                                <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover}/>
-                           </div>
-                       ))}
-                   </div>
+            ))}
+        </div>
+      </div>
+      <Qazandyq quantity={0} />
+      <Qazandyq quantity={0} />
+      <div className=" board__side mySide">
+        <div className="otaus">
+          {remoteData?.board
+            ?.filter((player: BoardCell) => player.playerId == 2)
+            .reverse()
+            .map((el: BoardCell) => (
+              <div className="otau" key={el.playerId + el.id}>
+                <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover} />
               </div>
-          </div>
-        )
-      }
+            ))}
+        </div>
+      </div>
+    </div>
+  );
 }

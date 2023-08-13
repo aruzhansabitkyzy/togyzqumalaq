@@ -1,217 +1,215 @@
 .game {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
-
 
 /*  playerbanner */
 .sideBar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 .current {
-    background-color: rgba(255,255,255,1);
+  background-color: rgba(255, 255, 255, 1);
 }
-.not-current{
-    background-color: rgba(255,255,255,0.5);
+.not-current {
+  background-color: rgba(255, 255, 255, 0.5);
 }
-.player 
-{
-    width: 17vw;
-    height: 100px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    padding: 10px;
-    text-align: center;
-    background-color: white;
+.player {
+  width: 17vw;
+  height: 100px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  padding: 10px;
+  text-align: center;
+  background-color: white;
 }
 .player__turn {
-    color: rgb(rgb(17, 84, 7), green, blue)
+  color: rgb(rgb(17, 84, 7), green, blue);
 }
-.buttons{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 50%;
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 50%;
 }
 /*  board */
 .board {
-    background-color: #796349;
-    padding: 15px;
-    width: 80%;
+  background-color: #796349;
+  padding: 15px;
+  width: 80%;
 }
 .otaus {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 /*  otau */
 .otau-in {
-    background-color: #F6EDDD;
-    -webkit-box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
-    -moz-box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
-    box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
-    border-radius: 5px;
-    width: 90px;
-    height:182px;
-    display: flex;
-    justify-content: space-between;
-    padding-left: 3px;
-    cursor: pointer;
-    position: relative;
+  background-color: #f6eddd;
+  -webkit-box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: -1px 2px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 5px;
+  width: 90px;
+  height: 182px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 3px;
+  cursor: pointer;
+  position: relative;
 }
 .otau__balls {
-    width: 90px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+  width: 90px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 .otau-hover {
-    background-color: rgba(209, 60, 52, 0.5);
+  background-color: rgba(209, 60, 52, 0.5);
 }
 .otau__balls__overflow-c1 {
-    position: absolute;
-    display: flex;
-    flex-direction: column; 
-    left: 11%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 11%;
 }
 .otau__balls__overflow-c2 {
-    position: absolute;
-    display: flex;
-    flex-direction: column; 
-    left: 44%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 44%;
 }
 .otau__balls__overflow2-c1 {
-    position: absolute;
-    display: flex;
-    flex-direction: column; 
-    left: 20%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 20%;
 }
 .otau__balls__overflow2-c2 {
-    position: absolute;
-    display: flex;
-    flex-direction: column; 
-    left: 38%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 38%;
 }
 .cur__quantity {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 100%;
-    padding-left: 4px;
-    padding-bottom: 15px;
-    z-index: 10;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 100%;
+  padding-left: 4px;
+  padding-bottom: 15px;
+  z-index: 10;
 }
 .otaular {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 /*  qazandyq */
 .qazandyq {
-    width: 100%;
-    height: 70px;
-    background-color: #F6EDDD;
-    margin: 10px 0;
-    position: relative;
-    border-radius: 5px;
+  width: 100%;
+  height: 70px;
+  background-color: #f6eddd;
+  margin: 10px 0;
+  position: relative;
+  border-radius: 5px;
 }
 .qazandyq__balls {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .qazandyq__balls__r1 {
-    position: absolute;
-    display: flex;
-    top: 12%;
+  position: absolute;
+  display: flex;
+  top: 12%;
 }
 .qazandyq__balls__r2 {
-    position: absolute;
-    display: flex;
-    top: 32%;
+  position: absolute;
+  display: flex;
+  top: 32%;
 }
 .row1 {
-    display: flex;
-    margin: 0;
+  display: flex;
+  margin: 0;
 }
 .row2 {
-    display: flex;
-    margin: 0;
+  display: flex;
+  margin: 0;
 }
 .upper_row1 {
-    position: absolute;
-    top: 15%;
-    display: flex;
+  position: absolute;
+  top: 15%;
+  display: flex;
 }
 .upper_row2 {
-    position: absolute;
-    top: 30%;
-    display: flex;
+  position: absolute;
+  top: 30%;
+  display: flex;
 }
 
 .counter {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    border-radius: 100%;
-    padding-left: 5px;
-    padding-bottom: 3px;
-    z-index: 10;
-    left: 97%
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border-radius: 100%;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  z-index: 10;
+  left: 97%;
 }
 
 /* ball*/
 .ball {
-    width: 28px;
-    height: 28px;
+  width: 28px;
+  height: 28px;
 }
 .regular {
-    background-color: #ECB365;
+  background-color: #ecb365;
 }
 .tuzdyq {
-    background-color: rgb(209, 60, 52);
+  background-color: rgb(209, 60, 52);
 }
 
-@media(max-width:1052px) {
-    .game {
-        flex-direction: column;
-        position: relative;
-        padding-bottom: 100px;
-    }
-    .game__board {
-        width: 100%;
-        order: 2;
-    }
-    .game__players {
-        order : 1;
-        margin-bottom: 10px;
-    }
-    .players{
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-    .game__buttons {
-        position: absolute;
-        top: 90%;
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-around;
-    }
-    .player {
-        height: 60px;
-        padding: 5px;
-    }
+@media (max-width: 1052px) {
+  .game {
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 100px;
+  }
+  .game__board {
+    width: 100%;
+    order: 2;
+  }
+  .game__players {
+    order: 1;
+    margin-bottom: 10px;
+  }
+  .players {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .game__buttons {
+    position: absolute;
+    top: 90%;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .player {
+    height: 60px;
+    padding: 5px;
+  }
 }
 
-@media(max-width: 854px) {
-    body {
-        display: none;
-    }
+@media (max-width: 854px) {
+  body {
+    display: none;
+  }
 }

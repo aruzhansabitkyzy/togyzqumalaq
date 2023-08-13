@@ -3,7 +3,6 @@ import '/public/css/popup.css';
 import Selection from '@/components/Selection';
 import {useEffect} from 'react';
 import PopupBody from './PopupBody';
-import GamePopup from './GamePopup';
 
 const LANGUAGES = ['english', 'kazakh', 'russian']
 const THEMES = ['dark' , 'light']

@@ -6,9 +6,9 @@
 // import Popup from "./Popup";
 // import { usePlayerContext } from "@/context/PlayerContext";
 // type BoardCell = {
-//     playerId: number 
-//     id: number 
-//     count: number 
+//     playerId: number
+//     id: number
+//     count: number
 //     hover: boolean,
 //     tuzdyq: boolean
 // }
@@ -17,7 +17,7 @@
 //         currentPlayer: number,
 //         qazandyq1: number,
 //         qazandyq2: number,
-//         tuzdyq1: number, 
+//         tuzdyq1: number,
 //         tuzdyq2: number,
 //         winner : number
 //     }
@@ -56,7 +56,7 @@
 //     const [popupOpen, setPopupOpen] = useState(false);
 //     const [showHint, setShowHint] = useState(false);
 //     const context = usePlayerContext();
-    
+
 //     useEffect(() => {
 //         props.setValues({...props.values, currentPlayer: currentPlayer})
 //     }, [currentPlayer])
@@ -64,7 +64,7 @@
 //     useEffect(() => {
 //         props.setValues({...props.values, qazandyq1: qazandyq1})
 //     },[qazandyq1])
-    
+
 //     useEffect(() => {
 //         props.setValues({...props.values, qazandyq2: qazandyq2})
 //     },[qazandyq2])
@@ -78,7 +78,7 @@
 //     }, [tuzdyq2])
 
 //     useEffect(() => {
-//          if(props.reset == true) {            
+//          if(props.reset == true) {
 //             var tempBoard = [...board];
 //             tempBoard.map(obj => obj.count=9);
 //             tempBoard.map(obj => obj.tuzdyq=false);
@@ -100,7 +100,7 @@
 //     function switchTurn(playerId: number) {
 //         if(playerId == 0) {
 //             setCurrentPlayer(1);
-        
+
 //             context.turnPlayer2();
 //             context.removeTurnPlayer1()
 //         }
@@ -129,7 +129,7 @@
 //         hover: boolean;
 //         tuzdyq: boolean;
 //     }[], id: number) {
-        
+
 //         if(tempBoard[id].playerId != currentPlayer) {
 //             tempBoard[id].tuzdyq = true;
 //         }
@@ -157,7 +157,7 @@
 //         console.log("in")
 //         if(currentPlayer === el.playerId) {
 //             const curOtauInd = getIndex(el.playerId, el.id);
-            
+
 //             // the num of qumalaq
 //             let qumalaqs = el.count;
 //             if (qumalaqs <=1) return;
@@ -175,7 +175,6 @@
 //             obj.hover == true ? obj.hover=false : obj
 //         })
 
-
 //         setBoard(tempBoard);
 //         console.log("out");
 //     }
@@ -184,7 +183,7 @@
 //         if(currentPlayer==0) return tuzdyq1!= -1
 //         else return tuzdyq2 != -1
 //     }
-    
+
 //     function makeMove(el: BoardCell) {
 //         //check if the click was from the current player
 //         if(currentPlayer === el.playerId) {
@@ -198,7 +197,7 @@
 //             const tempBoard = [...board];
 //             tempBoard[curOtauInd].count = 1;
 //             qumalaqs--;
-           
+
 //             let nextOtauInd = (curOtauInd + 1) % tempBoard.length;
 //             var scoreFromTuzdyq1 = 0;
 //             var scoreFromTuzdyq2 = 0;
@@ -220,8 +219,6 @@
 //             console.log(nextOtauInd);
 //             console.log(tempBoard[nextOtauInd])
 //             const result = tempBoard[nextOtauInd].count;
-
-            
 
 //             if((result % 2 == 0 || result == 3) && tempBoard[nextOtauInd].playerId!= currentPlayer) {
 //                 if (currentPlayer === 0) {
@@ -246,7 +243,7 @@
 //                 setQazandyq2(qazandyq2 + scoreFromTuzdyq2);
 //                 context.setContextScore(scoreFromTuzdyq2, 1)
 //             }
-            
+
 //             switchTurn(el.playerId);
 //             isWinner();
 //           }
@@ -278,10 +275,9 @@
 //                 ))}
 //             </div>
 //         </div>
-        
+
 //         {popupOpen && (tuzdyq1!= -1 || tuzdyq2 != -1) && (<Popup action='tuzdyq' show={popupOpen} setShow={setPopupOpen}/>)}
-        
-        
+
 //         {popupOpen && winner!= -1 && (<Popup action='winner' show={popupOpen} setShow={setPopupOpen}/>)}
 //     </div>
 //     )

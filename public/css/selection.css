@@ -1,25 +1,25 @@
 .popup__option {
-    display: flex;
-    margin-bottom: 15px;
-    cursor: pointer;
+  display: flex;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 .popup__option_circle {
-    width: 32px;
-    height: 32px;
-    background-color: white;
-    border-radius: 100%;
-    margin-right: 15px;
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  border-radius: 100%;
+  margin-right: 15px;
 }
 .popup__option_text {
-    font-size:20px;
-    color: white;
+  font-size: 20px;
+  color: white;
 }
 .yellow {
-    background-color:#ECB365;
+  background-color: #ecb365;
 }
 
-@media(max-width: 854px) {
-    body {
-        display: none;
-    }
+@media (max-width: 854px) {
+  body {
+    display: none;
+  }
 }

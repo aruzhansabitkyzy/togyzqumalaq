@@ -1,34 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kanit&display=swap");
 .btn {
-    color: #ffffff;
-    border: 1px solid transparent;
-    font-family: 'Kanit';
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  color: #ffffff;
+  border: 1px solid transparent;
+  font-family: "Kanit";
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .btn-large {
-    border-radius: 5px;
-    font-size: 18px;
-    width: 100%;
-    padding: 10px 30px;
+  border-radius: 5px;
+  font-size: 18px;
+  width: 100%;
+  padding: 10px 30px;
 }
 .btn-medium {
-    border-radius: 5px;
-    font-size: 18px;
-    padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 10px 20px;
 }
 .btn-small {
-    border-radius: 5px;
-    font-size: 16px;
-   
+  border-radius: 5px;
+  font-size: 16px;
 }
 .yellow {
-    background-color: #ECB365;
+  background-color: #ecb365;
 }
 
-@media(max-width: 854px) {
-    body {
-        display: none;
-    }
+@media (max-width: 854px) {
+  body {
+    display: none;
+  }
 }
