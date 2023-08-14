@@ -15,7 +15,6 @@ export default function SideBar(props: any) {
   const [currentUser, setCurrentUser] = useState({
     id: 0,
     name: "",
-    tuzdyq: -1,
     score: 0,
   });
   const resetMutation = useMutation(resetGame);
@@ -37,15 +36,13 @@ export default function SideBar(props: any) {
       setCurrentUser({
         id: remoteData.players[0].id,
         name: remoteData.players[0].name,
-        tuzdyq: remoteData.players[0].tuzdyq,
-        score: remoteData.players[0].score,
+        score : remoteData.qazan0
       });
     } else {
       setCurrentUser({
         id: remoteData.players[1].id,
         name: remoteData.players[1].name,
-        tuzdyq: remoteData.players[1].tuzdyq,
-        score: remoteData.players[1].score,
+        score: remoteData.qazan1,
       });
     }
   }, [props.remoteData]);
@@ -57,10 +54,8 @@ export default function SideBar(props: any) {
           <div className="content__btns">
             <Button
               text={
-                pendingAction
-                  ? pendingAction?.charAt(0).toUpperCase() +
-                    pendingAction?.slice(1)
-                  : ""
+                pendingAction?
+                pendingAction?.charAt(0).toUpperCase() + pendingAction?.slice(1):""
               }
               size={"btn-medium"}
               onClick={pendingAction === "reset" ? handleReset : handleExit}
@@ -69,8 +64,8 @@ export default function SideBar(props: any) {
               text="Cancel"
               size={"btn-medium"}
               onClick={() => {
-                setIsOpen(false);
-                setPendingAction(null);
+                setIsOpen(false)
+                setPendingAction(null)
               }}
             />
           </div>
@@ -91,8 +86,8 @@ export default function SideBar(props: any) {
             <h4>
               score:{" "}
               {remoteData.players[0].name !== currentUser.name
-                ? remoteData.players[0].score
-                : remoteData.players[1].score}
+                ? remoteData.qazan0
+                : remoteData.qazan1}
             </h4>
           </div>
         )}
@@ -103,7 +98,7 @@ export default function SideBar(props: any) {
               size={"btn-large"}
               onClick={() => {
                 setIsOpen(true);
-                setPendingAction("reset");
+                setPendingAction('reset');
               }}
             />
           </span>
@@ -113,7 +108,7 @@ export default function SideBar(props: any) {
               size={"btn-large"}
               onClick={() => {
                 setIsOpen(true);
-                setPendingAction("exit");
+                setPendingAction('exit');
               }}
             />
           </span>

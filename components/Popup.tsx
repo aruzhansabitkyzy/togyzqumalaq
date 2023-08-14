@@ -36,10 +36,6 @@ const Popup = (props:Props) => {
         <div className='popup__box bg-light1 dark:bg-dark1'>
            {type=='lang' && ( <PopupBody action={type}  show={props.show} setShow={props.setShow}/>)}
            {type=='theme' && ( <PopupBody action={type}  show={props.show} setShow={props.setShow}/>)}
-           {type=='tuzdyq' && (<GamePopup type={type} show={props.show} setShow={props.setShow}/>)}
-           {type=='winner' && (<GamePopup type={type} show={props.show} setShow={props.setShow}/>)}
-           {type=='reset' && (<GamePopup type={type} show={props.show} setShow={props.setShow} action2={props.action2} setAction2={props.setAction2}/>)}
-           {type=='exit' && (<GamePopup type={type} show={props.show} setShow={props.setShow} action2={props.action2} setAction2={props.setAction2} action3={props.action3} setAction3={props.setAction3}/>)}
         </div>
       </div>
    )

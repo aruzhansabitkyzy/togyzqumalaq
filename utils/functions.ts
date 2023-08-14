@@ -8,7 +8,7 @@ import {
   deleteDoc,
   FieldValue,
 } from "firebase/firestore";
-import { initBoard } from "@/lib/constants";
+import { initBoard } from "@/utils/constants";
 import { Player } from "./interfaces";
 
 export function lsGet(str: string) {
@@ -29,17 +29,17 @@ export async function createRoom({
   console.log("hey");
   const player = {
     id: 0,
-    name: PLAYER_ONE,
-    tuzdyq: -1,
-    score: 0
+    name: PLAYER_ONE
   };
   const game = {
     gameId: gameId,
     status: "waiting",
     players: [player],
     board: initBoard,
-    currentTurn: player,
+    currentTurn: 0,
     winner: null,
+    qazan0: 0,
+    tuzdyq0: -1
   };
   lsSet("userName", PLAYER_ONE);
   await db
@@ -59,8 +59,6 @@ export async function joinRoom({ room, name }: { room: string; name: string }) {
   const player = {
     id: 1,
     name: name,
-    tuzdyq: -1,
-    score: 0,
   };
 
   if (docSnap.status == "waiting") {
@@ -68,6 +66,8 @@ export async function joinRoom({ room, name }: { room: string; name: string }) {
     await updateDoc(game, {
       status: "ready",
       players: arrayUnion(player),
+      qazan1: 0,
+      tuzdyq1: -1
     });
   }
 }
@@ -129,7 +129,7 @@ export async function getData(gameId: string) {
   const docSnap = await getDoc(docRef);
   return docSnap?.data();
 }
-export async function updateData(gameId: string, data: any, status: string) {
+export async function updateData({gameId, data}  : {gameId: string, data: any}) {
   const game = doc(db, "room", gameId);
   await updateDoc(game, data);
 }

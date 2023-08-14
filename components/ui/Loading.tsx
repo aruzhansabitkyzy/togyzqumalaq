@@ -1,4 +1,4 @@
-import Ornament from "./ui/Ornament";
+import Ornament from "./Ornament";
 import "/public/css/loading.css";
 const Loading = () => {
   return (

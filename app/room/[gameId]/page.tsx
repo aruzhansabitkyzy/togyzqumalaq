@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import Board from "@/components/model/Board";
 import SideBar from "@/components/ui/SideBar";
-import Loading from "@/components/Loading";
+import Loading from "@/components/ui/Loading";
 import { getData } from "@/utils/functions";
 import { useQuery } from "@tanstack/react-query";
 export default function GamePage() {

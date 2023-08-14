@@ -8,7 +8,7 @@ import Link from "next/link";
 import { createRoom, joinRoom } from "@/utils/functions";
 import { auth } from "../firebase";
 import { lsSet, lsGet } from "@/utils/functions";
-import Loading from "@/components/Loading";
+import Loading from "@/components/ui/Loading";
 
 export default function Home() {
   const queryClient = useQueryClient();
@@ -17,16 +17,15 @@ export default function Home() {
   const router = useRouter();
   const currentUser = auth.currentUser;
 
-
   const mutationCreate = useMutation(createRoom);
   const mutationJoin = useMutation(joinRoom, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['room', room]);
-    }
-  })
+      queryClient.invalidateQueries(["room", room]);
+    },
+  });
 
   if (mutationCreate.isSuccess) router.push(`room/${lsGet("id")}`);
-  if(mutationJoin.isSuccess) router.push(`room/${room}`)
+  if (mutationJoin.isSuccess) router.push(`room/${room}`);
 
   async function handleCreate() {
     lsSet("id", `${Math.random().toString(36).substr(2, 9)}_${Date.now()}`);
@@ -40,10 +39,10 @@ export default function Home() {
 
   async function handleJoin() {
     if (room.trim() === "" || name.trim() === "") return;
-        mutationJoin.mutate({
-          room: room,
-          name: name
-        })
+    mutationJoin.mutate({
+      room: room,
+      name: name,
+    });
   }
   return (
     <>
@@ -126,4 +125,3 @@ export default function Home() {
     </>
   );
 }
-
