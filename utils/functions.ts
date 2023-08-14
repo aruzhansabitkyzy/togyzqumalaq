@@ -109,18 +109,16 @@ export async function resetGame({ room }: { room: string }) {
     return "Not found";
   }
 
-  const player = docSnap.players.map((player: Player) => {
-    player.score = 0;
-    player.tuzdyq = -1;
-  });
-
   if (docSnap.status == "ready") {
     console.log("Resetting...");
-    console.log(player)
     await updateDoc(game, {
       board: initBoard,
       winner: null,
-      
+      qazan0: 0,
+      qazan1: 0,
+      tuzdyq1: 0,
+      tuzdyq2 : 0,
+      currentTurn: 0
     });
   }
 }

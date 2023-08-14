@@ -5,11 +5,13 @@ import Qazandyq from "../ui/Qazandyq";
 import { lsGet } from "@/utils/functions";
 import { useMutation } from "@tanstack/react-query";
 import { updateData } from "@/utils/functions";
+import Modal from "../ui/Modal";
 
 export default function Board(props: any) {
   const user = lsGet("userName");
   const [remoteData, setRemoteData] = useState(props.remoteData);
   const updateMutation = useMutation(updateData);
+  const [isOpen, setIsOpen] = useState(false)
 
   // my side
   const [side, setSide] = useState({
@@ -60,13 +62,18 @@ export default function Board(props: any) {
   }
 
   function checkResultingOtau(tempBoard: BoardCell[], nextOtauInd: number) {
-    if (tempBoard[nextOtauInd].playerId != remoteData.currentTurn.id)
-      return true;
+    console.log(
+      "My turn is " +
+        remoteData.currentTurn +
+        " and the player id for temp board " +
+        tempBoard[nextOtauInd].playerId
+    );
+    if (tempBoard[nextOtauInd].playerId != remoteData.currentTurn) return true;
     return false;
   }
 
   function setMyScore(result: number) {
-    if (remoteData.currentTurn.id == side.id) {
+    if (remoteData.currentTurn == side.id) {
       setScore({ ...score, me: score.me + result });
     } else setScore({ ...score, other: score.other + result });
   }
@@ -78,37 +85,49 @@ export default function Board(props: any) {
     if (isOtherSide && result % 2 == 0) {
       setMyScore(result);
       tempBoard[nextOtauInd].count = 0;
+      if (side.id == 0) {
+        updateRemote({
+          qazan0: remoteData.qazan0 + score.me + result,
+        });
+      } else {
+        updateRemote({
+          qazan1: remoteData.qazan1 + score.me + result,
+        });
+      }
     } else if (
       isOtherSide &&
       result == 3 &&
-      !isTuzdyq(tempBoard, nextOtauInd, remoteData.currentTurn.id)
+      !isTuzdyq(tempBoard, nextOtauInd, remoteData.currentTurn)
     ) {
       setMyScore(result);
       createTuzdyq(tempBoard, nextOtauInd);
       tempBoard[nextOtauInd].count = 0;
+      if (side.id == 0) {
+        updateRemote({
+          qazan0: remoteData.qazan0 + score.me + result,
+        });
+      } else {
+        updateRemote({
+          qazan1: remoteData.qazan1 + score.me + result,
+        });
+      }
     }
     console.log(
       "qazan0:  " + remoteData.qazan0 + "  qazan1: " + remoteData.qazan1
     );
-    if (side.id == 0) {
-      updateRemote({
-        board: tempBoard,
-        qazan0: remoteData.qazan0 + score.me + result,
-      });
-    } else {
-      updateRemote({
-        board: tempBoard,
-        qazan1: remoteData.qazan1 + score.me + result,
-      });
-    }
 
+    updateRemote({
+      board: tempBoard,
+    });
     switchTurn();
     setScore({ me: 0, other: 0 });
   }
 
   function updateRemote(data: any) {
     console.log("remote");
+    //Update local state immediately
     updateMutation.mutate({ gameId: remoteData.gameId, data: data });
+    setRemoteData((prevData: any) => ({ ...prevData, ...data }));
   }
 
   // check if the cell is tuzdyq set to true
@@ -129,16 +148,16 @@ export default function Board(props: any) {
   // set a tuzdyq
   function createTuzdyq(tempBoard: BoardCell[], nextOtauInd: number) {
     tempBoard[nextOtauInd].tuzdyq = true;
-    if (tempBoard[nextOtauInd].playerId == side.id) {
+    //make sure tuzdyq being on the other side
+    if (tempBoard[nextOtauInd].playerId != side.id) {
       updateRemote({
         tuzdyq0: side.id == 0 ? nextOtauInd : -1,
         tuzdyq1: side.id == 1 ? nextOtauInd : -1,
       });
-    } else {
-      updateRemote({
-        tuzdyq0: side.id == 0 ? nextOtauInd : -1,
-        tuzdyq1: side.id == 1 ? nextOtauInd : -1,
-      });
+
+      // pop up modal message
+      setIsOpen(true);
+
     }
   }
 
@@ -173,16 +192,46 @@ export default function Board(props: any) {
             ? setScore({ ...score, me: score.me + 1 })
             : setScore({ ...score, other: score.other + 1 });
         } else {
-          tempBoard[nextOtauInd].count++;
+            tempBoard[nextOtauInd].count++;
         }
         qumalaqs--;
-        nextOtauInd = (nextOtauInd + 1) % tempBoard.length;
+        if(qumalaqs != 0) {
+          nextOtauInd = (nextOtauInd + 1) % tempBoard.length;
+        }
       }
 
-      nextOtauInd--;
       moveToQazan(tempBoard, nextOtauInd);
     }
   }
+
+  function hintGoal(el: BoardCell) {
+    // console.log("in");
+    // if (remoteData.currentTurn === el.playerId) {
+    //   const curOtauInd = getIndex(el.playerId, el.id);
+    //   // the num of qumalaq
+    //   let qumalaqs = el.count;
+    //   if (qumalaqs <= 1) return;
+    //   const goal = (curOtauInd + (qumalaqs - 1)) % remoteData.board.length;
+    //   const tempBoard = [...remoteData.board];
+    //   tempBoard[goal].hover = true;
+    //   updateRemote({
+    //     board: tempBoard,
+    //   });
+    //   console.log(goal);
+    // }
+  }
+
+  function unhint(el: BoardCell) {
+    // const tempBoard = [...remoteData.board];
+    // tempBoard.findIndex((obj) => {
+    //   obj.hover == true ? (obj.hover = false) : obj;
+    // });
+    // updateRemote({
+    //   board: tempBoard,
+    // });
+  }
+
+
   // fetch data in real time
   useEffect(() => {
     setRemoteData(props.remoteData);
@@ -195,6 +244,7 @@ export default function Board(props: any) {
     setSide(cur);
   }, [props.remoteData]);
   return (
+    <>
     <div className="board">
       <div className="board__side opponentSide">
         <div className="otaus">
@@ -208,6 +258,8 @@ export default function Board(props: any) {
                 className="otau"
                 key={el.playerId + el.id}
                 onClick={() => makeMove(el)}
+                onMouseEnter={() => hintGoal(el)}
+                onMouseLeave={() => unhint(el)}
               >
                 <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover} />
               </div>
@@ -239,6 +291,8 @@ export default function Board(props: any) {
                 className="otau"
                 key={el.playerId + el.id}
                 onClick={() => makeMove(el)}
+                onMouseEnter={() => hintGoal(el)}
+                onMouseLeave={() => unhint(el)}
               >
                 <Otau quantity={el.count} tuzdyq={el.tuzdyq} hover={el.hover} />
               </div>
@@ -246,5 +300,12 @@ export default function Board(props: any) {
         </div>
       </div>
     </div>
+
+    <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} autoClose={true}>
+        <div className="content">
+          <h1>{remoteData.currentTurn == 0 ? remoteData.players[1]?.name :remoteData.players[0]?.name} got Tuzdyq</h1>
+        </div>
+    </Modal>
+    </>
   );
 }

@@ -5,25 +5,24 @@ import SideBar from "@/components/ui/SideBar";
 import Loading from "@/components/ui/Loading";
 import { getData } from "@/utils/functions";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 export default function GamePage() {
   const { gameId } = useParams();
-
   const { status, data, error } = useQuery({
-    queryKey: ["room", gameId],
+    queryKey: ["room", gameId], 
     queryFn: () => getData(gameId),
+    refetchInterval: 1000
   });
 
+  useEffect(() => {
+    console.log("UPDATED")
+  },[data])
+
   if (status == "loading") return <Loading />;
-  if (status == "error") return <h1>Error: {}</h1>;
   return (
     <div className="game bg-light3 dark:bg-dark3">
       <Board remoteData={data} />
       <SideBar remoteData={data} />
     </div>
-  );
-  return (
-    <>
-      <h1> Hey </h1>
-    </>
   );
 }
