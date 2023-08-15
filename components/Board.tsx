@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BoardCell, Player } from "@/utils/interfaces";
 import Otau from "./ui/Otau";
+import { useRouter } from "next/navigation";
 import Qazandyq from "./ui/Qazandyq";
 import { lsGet } from "@/utils/functions";
 import { useMutation } from "@tanstack/react-query";
@@ -9,10 +10,11 @@ import Modal from "./ui/Modal";
 
 export default function Board(props: any) {
   const user = lsGet("userName");
+  const router = useRouter()
   const [remoteData, setRemoteData] = useState(props.remoteData);
   const updateMutation = useMutation(updateData);
   const [isOpen, setIsOpen] = useState(false);
-  const [winner, setWinner] = useState(-1)
+  const [winner, setWinner] = useState(-1);
   // my side
   const [side, setSide] = useState({
     id: -1,
@@ -24,9 +26,14 @@ export default function Board(props: any) {
   //the player should click on his own otau to make a move
 
   function getWinner() {
-    if(remoteData.qazan0 >= 81) return 0
-    else if(remoteData.qazan1 >= 81 )return 1
-    return -1
+    if (remoteData.qazan0 >= 81) {
+      finishGame();
+      return 0;
+    } else if (remoteData.qazan1 >= 81) {
+      finishGame();
+      return 1;
+    }
+    return -1;
   }
   function checkClick(playerId: number) {
     if (remoteData.currentTurn === playerId) return true;
@@ -59,13 +66,6 @@ export default function Board(props: any) {
   }
 
   //checks if otau has sufficient amount of qumalaq to make a move
-  function validOtau(playerId: number, otauId: number) {
-    const index = getIndex(playerId, otauId);
-    if (remoteData.board[index].count > 1) {
-      return true;
-    }
-    return false;
-  }
 
   function checkResultingOtau(tempBoard: BoardCell[], nextOtauInd: number) {
     console.log(
@@ -106,16 +106,18 @@ export default function Board(props: any) {
       !isTuzdyq(tempBoard, nextOtauInd, remoteData.currentTurn)
     ) {
       setMyScore(result);
-      createTuzdyq(tempBoard, nextOtauInd);
-      tempBoard[nextOtauInd].count = 0;
-      if (side.id == 0) {
-        updateRemote({
-          qazan0: remoteData.qazan0 + score.me + result,
-        });
-      } else {
-        updateRemote({
-          qazan1: remoteData.qazan1 + score.me + result,
-        });
+      const isLegal = createTuzdyq(tempBoard, nextOtauInd);
+      if (isLegal) {
+        tempBoard[nextOtauInd].count = 0;
+        if (side.id == 0) {
+          updateRemote({
+            qazan0: remoteData.qazan0 + score.me + result,
+          });
+        } else {
+          updateRemote({
+            qazan1: remoteData.qazan1 + score.me + result,
+          });
+        }
       }
     }
     console.log(
@@ -127,7 +129,49 @@ export default function Board(props: any) {
     });
     switchTurn();
     setScore({ me: 0, other: 0 });
-    setWinner(getWinner())
+    setWinner(getWinner());
+  }
+
+  function atsyrau(tempBoard: BoardCell[], player: number) {
+    let flag = true;
+    if (player == 0) {
+      const player1 = tempBoard
+        .filter((cell) => cell.playerId == 1)
+        .map((cell) => {
+          if (cell.count != 0) flag = false;
+        });
+    } else {
+      const player0 = tempBoard
+        .filter((cell) => cell.playerId == 0)
+        .map((cell) => {
+          if (cell.count != 0) flag = false;
+        });
+    }
+    if (flag) {
+      activateAtsyrau(player, tempBoard);
+    }
+    return true;
+  }
+
+  function activateAtsyrau(player: number, tempBoard: BoardCell[]) {
+    let count = 0;
+    if (player == 0) {
+      const player0 = tempBoard
+        .filter((cell) => cell.playerId == 0)
+        .map((cell) => (count += cell.count));
+      updateRemote({
+        qazan0: remoteData.qazan0 + count,
+      });
+    } else {
+      const player1 = tempBoard
+        .filter((cell) => cell.playerId == 1)
+        .map((cell) => (count += cell.count));
+      updateRemote({
+        qazan1: remoteData.qazan1 + count,
+      });
+    }
+
+    setWinner(getWinner());
   }
 
   function updateRemote(data: any) {
@@ -154,31 +198,47 @@ export default function Board(props: any) {
 
   // set a tuzdyq
   function createTuzdyq(tempBoard: BoardCell[], nextOtauInd: number) {
+    if (nextOtauInd == 9) return;
+
     tempBoard[nextOtauInd].tuzdyq = true;
     //make sure tuzdyq being on the other side
     if (tempBoard[nextOtauInd].playerId != side.id) {
-      updateRemote({
-        tuzdyq0: side.id == 0 ? nextOtauInd : -1,
-        tuzdyq1: side.id == 1 ? nextOtauInd : -1,
-      });
+      if (side.id == 0) {
+        if (remoteData.tuzdyq1 != -1 && remoteData.tuzdyq1 != nextOtauInd) {
+          updateRemote({
+            tuzdyq0: nextOtauInd,
+          });
+          setIsOpen(true);
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (remoteData.tuzdyq0 != -1 && remoteData.tuzdyq0 != nextOtauInd) {
+          updateRemote({
+            tuzdyq1: nextOtauInd,
+          });
+          setIsOpen(true);
+          return true;
+        } else {
+          return false;
+        }
+      }
 
       // pop up modal message
-      setIsOpen(true);
     }
   }
 
   function makeMove(el: BoardCell) {
-    if (
-      checkClick(el.playerId) &&
-      validOtau(el.playerId, el.id) &&
-      checkTurn()
-    ) {
+    if (checkClick(el.playerId) && checkTurn()) {
       let qumalaqs = el.count;
       const curOtauInd = getIndex(el.playerId, el.id);
       // save the board to temporary array and leave 1 to current otau
       const tempBoard = [...remoteData.board];
-      tempBoard[curOtauInd].count = 1;
-      qumalaqs--;
+      if (qumalaqs != 1) {
+        tempBoard[curOtauInd].count = 1;
+        qumalaqs--;
+      }
 
       let nextOtauInd = (curOtauInd + 1) % tempBoard.length;
       while (qumalaqs > 0) {
@@ -205,11 +265,16 @@ export default function Board(props: any) {
           nextOtauInd = (nextOtauInd + 1) % tempBoard.length;
         }
       }
-
       moveToQazan(tempBoard, nextOtauInd);
+      atsyrau(tempBoard, el.playerId);
     }
   }
 
+  function finishGame() {
+    if (winner != -1) {
+      setIsOpen(true);
+    }
+  }
   function hintGoal(el: BoardCell) {
     console.log("in");
     if (remoteData.currentTurn === el.playerId) {
@@ -324,15 +389,29 @@ export default function Board(props: any) {
           </h1>
         </div>
       </Modal>
-      {winner!=-1 && (
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} autoClose={true}>
-        <div className="content">
-          <h1>
-            {side.id == winner ? "Congratulations! You win!" : `Oops, You lose!`}
-          </h1>
-        </div>
-      </Modal>
+      {winner != -1 && (
+        <Modal
+          isOpen={isOpen}
+          onClose={() => {}}
+          autoClose={false}
+        >
+          <div className="content">
+            <h1>
+              {side.id == winner
+                ? "Congratulations! You win!"
+                : `Oops, You lose!`}
+            </h1>
+            <div
+                className="popup__close text-black dark:text-white"
+                onClick={() => { setIsOpen(false); router.push("/")}}
+              >
+                close
+              </div>
+          </div>
+        </Modal>
       )}
+
+      
     </>
   );
 }

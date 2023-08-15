@@ -48,11 +48,11 @@ export default function SideBar(props: any) {
           </div>
         ) : (
           <div className={`player ${!isUserTurn() ? "turn" : ""}`}>
-            <h2>
+            <h1>
               {remoteData.players[0].name !== user
                 ? remoteData.players[0].name
                 : remoteData.players[1].name}
-            </h2>
+            </h1>
             <h4>
               score:
               {remoteData.players[0].name !== user
@@ -84,12 +84,11 @@ export default function SideBar(props: any) {
           </span>
         </div>
         <div className={`player ${isUserTurn() ? "turn" : ""}`}>
-          <h2>
-            {" "}
+          <h1>
             {remoteData.players[0].name === user
               ? remoteData.players[0].name
               : remoteData.players[1].name}
-          </h2>
+          </h1>
           <h2>You</h2>
           <h4>
             score:{" "}
