@@ -1,4 +1,7 @@
 const Rules = () => {
-  return <h1>Rules</h1>;
+  return <div className="rules">
+    <h1> Rules</h1>
+    
+  </div>;
 };
 export default Rules;

@@ -50,7 +50,11 @@
   font-size: 20px;
 }
 .home__right {
+  margin-top:50px;
   width: 40%;
+}
+.home__play {
+  margin-bottom: 40px;
 }
 .label {
   color: white;

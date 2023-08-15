@@ -21,8 +21,8 @@ export default function GamePage() {
   if (status == "loading") return <Loading />;
   return (
     <div className="game bg-light3 dark:bg-dark3">
-      <Board remoteData={data} />
-      <SideBar remoteData={data} />
+      <Board remoteData={data} status = {status}/>
+      <SideBar remoteData={data} status = {status}/>
     </div>
   );
 }

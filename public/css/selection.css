@@ -17,6 +17,14 @@
 .yellow {
   background-color: #ecb365;
 }
+.tick {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 100%;
+  margin-left: 20%;
+  margin-top: 20%;
+}
 
 @media (max-width: 854px) {
   body {

@@ -12,7 +12,7 @@ export default function Board(props: any) {
   const [remoteData, setRemoteData] = useState(props.remoteData);
   const updateMutation = useMutation(updateData);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [winner, setWinner] = useState(-1)
   // my side
   const [side, setSide] = useState({
     id: -1,
@@ -22,6 +22,12 @@ export default function Board(props: any) {
   const [score, setScore] = useState({ me: 0, other: 0 });
 
   //the player should click on his own otau to make a move
+
+  function getWinner() {
+    if(remoteData.qazan0 >= 81) return 0
+    else if(remoteData.qazan1 >= 81 )return 1
+    return -1
+  }
   function checkClick(playerId: number) {
     if (remoteData.currentTurn === playerId) return true;
     return false;
@@ -121,6 +127,7 @@ export default function Board(props: any) {
     });
     switchTurn();
     setScore({ me: 0, other: 0 });
+    setWinner(getWinner())
   }
 
   function updateRemote(data: any) {
@@ -204,30 +211,30 @@ export default function Board(props: any) {
   }
 
   function hintGoal(el: BoardCell) {
-    // console.log("in");
-    // if (remoteData.currentTurn === el.playerId) {
-    //   const curOtauInd = getIndex(el.playerId, el.id);
-    //   // the num of qumalaq
-    //   let qumalaqs = el.count;
-    //   if (qumalaqs <= 1) return;
-    //   const goal = (curOtauInd + (qumalaqs - 1)) % remoteData.board.length;
-    //   const tempBoard = [...remoteData.board];
-    //   tempBoard[goal].hover = true;
-    //   updateRemote({
-    //     board: tempBoard,
-    //   });
-    //   console.log(goal);
-    // }
+    console.log("in");
+    if (remoteData.currentTurn === el.playerId) {
+      const curOtauInd = getIndex(el.playerId, el.id);
+      // the num of qumalaq
+      let qumalaqs = el.count;
+      if (qumalaqs <= 1) return;
+      const goal = (curOtauInd + (qumalaqs - 1)) % remoteData.board.length;
+      const tempBoard = [...remoteData.board];
+      tempBoard[goal].hover = true;
+      updateRemote({
+        board: tempBoard,
+      });
+      console.log(goal);
+    }
   }
 
   function unhint(el: BoardCell) {
-    // const tempBoard = [...remoteData.board];
-    // tempBoard.findIndex((obj) => {
-    //   obj.hover == true ? (obj.hover = false) : obj;
-    // });
-    // updateRemote({
-    //   board: tempBoard,
-    // });
+    const tempBoard = [...remoteData.board];
+    tempBoard.findIndex((obj) => {
+      obj.hover == true ? (obj.hover = false) : obj;
+    });
+    updateRemote({
+      board: tempBoard,
+    });
   }
 
   // fetch data in real time
@@ -271,7 +278,7 @@ export default function Board(props: any) {
         <Qazandyq
           quantity={
             remoteData.players.find((player: Player) => player.name === user)
-              .id === 0
+              ?.id === 0
               ? remoteData.qazan0
               : remoteData.qazan1
           }
@@ -317,6 +324,15 @@ export default function Board(props: any) {
           </h1>
         </div>
       </Modal>
+      {winner!=-1 && (
+        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} autoClose={true}>
+        <div className="content">
+          <h1>
+            {side.id == winner ? "Congratulations! You win!" : `Oops, You lose!`}
+          </h1>
+        </div>
+      </Modal>
+      )}
     </>
   );
 }

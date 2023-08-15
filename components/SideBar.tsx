@@ -14,12 +14,15 @@ export default function SideBar(props: any) {
   const [remoteData, setRemoteData] = useState(props.remoteData);
   const [isOpen, setIsOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
-  
+
   const resetMutation = useMutation(resetGame);
   const exitMutation = useMutation(leaveRoom);
 
   const isUserTurn = () => {
-    return remoteData.currentTurn === remoteData.players.findIndex((player:Player) => player.name === user);
+    return (
+      remoteData.currentTurn ===
+      remoteData.players.findIndex((player: Player) => player.name === user)
+    );
   };
 
   function handleReset() {
@@ -34,7 +37,7 @@ export default function SideBar(props: any) {
   }
   useEffect(() => {
     setRemoteData(props.remoteData);
-    console.log(props.remoteData)
+    console.log(props.remoteData);
   }, [props.remoteData]);
   return (
     <>

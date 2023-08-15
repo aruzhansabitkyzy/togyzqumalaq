@@ -12,7 +12,8 @@ import Loading from "@/components/ui/Loading";
 
 export default function Home() {
   const queryClient = useQueryClient();
-  const [name, setName] = useState("");
+  const [creator, setCreator] = useState("");
+  const [joiner, setJoiner] = useState("");
   const [room, setRoom] = useState("");
   const router = useRouter();
   const currentUser = auth.currentUser;
@@ -29,19 +30,19 @@ export default function Home() {
 
   async function handleCreate() {
     lsSet("id", `${Math.random().toString(36).substr(2, 9)}_${Date.now()}`);
-
+    if (creator.trim() === "") return;
     mutationCreate.mutate({
-      PLAYER_ONE: name,
+      PLAYER_ONE: creator,
       PLAYER_TWO: "Waiting...",
       gameId: lsGet("id"),
     });
   }
 
   async function handleJoin() {
-    if (room.trim() === "" || name.trim() === "") return;
+    if (room.trim() === "" || joiner.trim() === "") return;
     mutationJoin.mutate({
       room: room,
-      name: name,
+      name: joiner,
     });
   }
   return (
@@ -91,8 +92,28 @@ export default function Home() {
               <input
                 className="home__input"
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={creator}
+                onChange={(e) => setCreator(e.target.value)}
+              ></input>
+              <br />
+              <div className="home__buttons">
+                <Button
+                  text={"Create a room"}
+                  size={"btn-medium"}
+                  onClick={() => handleCreate()}
+                />
+              </div>
+            </div>
+            <div className="home__play">
+              <label className="label text-black dark:text-white">
+                Player Name:{" "}
+              </label>
+              <br />
+              <input
+                className="home__input"
+                type="text"
+                value={joiner}
+                onChange={(e) => setJoiner(e.target.value)}
               ></input>
               <br />
               <label className="label text-black dark:text-white">
@@ -107,11 +128,6 @@ export default function Home() {
               ></input>
               <br />
               <div className="home__buttons">
-                <Button
-                  text={"Create a room"}
-                  size={"btn-medium"}
-                  onClick={() => handleCreate()}
-                />
                 <Button
                   text={"Join a room"}
                   size={"btn-medium"}
