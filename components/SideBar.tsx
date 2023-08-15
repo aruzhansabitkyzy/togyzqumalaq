@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import Button from "./Button";
+import Button from "./ui/Button";
 import { useRouter } from "next/navigation";
+import { Player } from "@/utils/interfaces";
 import { leaveRoom, lsGet, resetGame } from "@/utils/functions";
-import { useMutation} from "@tanstack/react-query";
-import Modal from "./Modal";
+import { useMutation } from "@tanstack/react-query";
+import Modal from "./ui/Modal";
+import "/public/css/game.css";
 
 export default function SideBar(props: any) {
   const user = lsGet("userName");
@@ -12,8 +14,13 @@ export default function SideBar(props: any) {
   const [remoteData, setRemoteData] = useState(props.remoteData);
   const [isOpen, setIsOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
+  
   const resetMutation = useMutation(resetGame);
   const exitMutation = useMutation(leaveRoom);
+
+  const isUserTurn = () => {
+    return remoteData.currentTurn === remoteData.players.findIndex((player:Player) => player.name === user);
+  };
 
   function handleReset() {
     resetMutation.mutate({ room: remoteData.gameId });
@@ -26,7 +33,8 @@ export default function SideBar(props: any) {
     setPendingAction(null);
   }
   useEffect(() => {
-    setRemoteData(props.remoteData)
+    setRemoteData(props.remoteData);
+    console.log(props.remoteData)
   }, [props.remoteData]);
   return (
     <>
@@ -36,7 +44,7 @@ export default function SideBar(props: any) {
             <h2> Waiting ... </h2>
           </div>
         ) : (
-          <div className={`player`}>
+          <div className={`player ${!isUserTurn() ? "turn" : ""}`}>
             <h2>
               {remoteData.players[0].name !== user
                 ? remoteData.players[0].name
@@ -72,7 +80,7 @@ export default function SideBar(props: any) {
             />
           </span>
         </div>
-        <div className={`player`}>
+        <div className={`player ${isUserTurn() ? "turn" : ""}`}>
           <h2>
             {" "}
             {remoteData.players[0].name === user

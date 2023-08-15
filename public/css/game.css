@@ -4,7 +4,7 @@
   justify-content: space-between;
 }
 
-/*  playerbanner */
+/*  sidebar */
 .sideBar {
   display: flex;
   flex-direction: column;
@@ -20,14 +20,18 @@
 .player {
   width: 17vw;
   height: 100px;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-bottom: 30px;
   padding: 10px;
   text-align: center;
   background-color: white;
+
 }
-.player__turn {
-  color: rgb(rgb(17, 84, 7), green, blue);
+.turn {
+  border: 6px solid #AA3A3A;
+  -webkit-box-shadow: -1px 2px 8px 0px rgba(0, 0,0, 0.5);
+  -moz-box-shadow: -1px 2px 8px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: -1px 0px 8px 0px rgba(0, 0, 0, 0.5);
 }
 .buttons {
   display: flex;
