@@ -1,0 +1,33 @@
+.tutorial {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 88vh;
+}
+.tutorial h1 {
+  font-size: 50px;
+}
+.rules {
+  text-align: center;
+  height: 100%;
+  color: white;
+}
+.rules__title {
+  font-size : 50px;
+}
+.rules__cont .description {
+  margin-bottom: 100px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+.rules__cont .description p {
+  margin-right: 30px;
+}
+.game_rules {
+  text-align: left;
+}
+.sub_rule {
+  font-size: 30px;
+  text-align: center;
+}

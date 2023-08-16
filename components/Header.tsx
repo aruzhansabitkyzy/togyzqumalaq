@@ -3,6 +3,7 @@ import "/public/css/header.css";
 import { useEffect, useState } from "react";
 import Modal from "./ui/Modal";
 import React from "react";
+import { useParams } from "next/navigation";
 import OrnamentSquare from "./ui/OrnamentSquare";
 import { useRouter } from "next/navigation";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -11,6 +12,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [soundOn, setSoundOn] = useState(true);
   const router = useRouter();
+  const {gameId} = useParams()
 
   return (
     <>
@@ -32,6 +34,7 @@ const Header = () => {
           >
             eng
           </span> */}
+          <span>Room id : {gameId}</span>
             <span
               className="text-black dark:text-white"
               onClick={() => setIsOpen(true)}

@@ -23,7 +23,7 @@ export default function Otau(props:OtauProps) {
 
         return(
             <div className={`otau-in ${hover==true ? 'otau-hover' : ''} `}>
-                <div className='cur__quantity'>{quantity}</div>
+                {!tuzdyq ? <div className='cur__quantity'>{quantity}</div> : ''}
                 <div className='otau__balls'>
                   {balls && balls.filter((el, index) => index < 10).map((el) =>
                          el

@@ -14,7 +14,6 @@ export default function SideBar(props: any) {
   const [remoteData, setRemoteData] = useState(props.remoteData);
   const [isOpen, setIsOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
-
   const resetMutation = useMutation(resetGame);
   const exitMutation = useMutation(leaveRoom);
 

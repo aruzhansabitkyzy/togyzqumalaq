@@ -88,7 +88,6 @@ export async function leaveRoom({ room }: { room: string }) {
   });
   if (docSnap.status == "ready") {
     console.log("Leaving");
-    alert(JSON.stringify(player));
     if (docSnap.players.length == 2) {
       await updateDoc(game, {
         status: "waiting",

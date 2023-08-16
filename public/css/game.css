@@ -180,6 +180,7 @@
   background-color: rgb(209, 60, 52);
 }
 
+
 @media (max-width: 1052px) {
   .game {
     flex-direction: column;
